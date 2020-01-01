@@ -3,22 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/maingraph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/petsListFragment">
 
     <fragment
         android:id="@+id/splashFragment"
         android:name="by.dro.pets.ui.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
-        <action
-            android:id="@+id/action_splashFragment_to_petsListFragment"
-            app:destination="@id/petsListFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/splashFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_splash" />
     <fragment
         android:id="@+id/petsListFragment"
         android:name="by.dro.pets.ui.PetsListFragment"

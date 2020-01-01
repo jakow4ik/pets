@@ -16,5 +16,5 @@ data class Pet(
 @Parcelize
 data class ListPets(
     var name: String? = "",
-    var pets: MutableMap<String, Pet> = HashMap()
+    var map: MutableMap<String, Pet> = HashMap()
 ):Parcelable
