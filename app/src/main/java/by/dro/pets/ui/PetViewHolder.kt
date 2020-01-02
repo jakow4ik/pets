@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.R
 import by.dro.pets.data.Pet
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.pet_view_holder.view.*
 
 class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelectedListener?):
@@ -26,13 +27,11 @@ class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelected
 
         itemView.uid.text = pet?.uid
 
-        if ((pet?.titleImg ?: "") != "") {
-            Glide.with(getContext())
-                .load(pet?.titleImg)
-                .into(itemView.imageView)
-        } else {
-            itemView.imageView.setImageResource(R.drawable.placeholder)
-        }
+        Glide.with(getContext())
+            .load(pet?.titleImg)
+            .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
+            .into(itemView.imageView)
+
 
         if (Build.VERSION.SDK_INT >= 21)
         itemView.imageView.transitionName = pet?.uid
