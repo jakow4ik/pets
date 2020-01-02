@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import by.dro.pets.R
@@ -19,8 +22,23 @@ import java.util.ArrayList
 
 class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
 
+    companion object{
+        const val ARG_UID = "ARG_UID"
+    }
+
     private lateinit var database: DatabaseReference
-    private var adapter = PetsAdapter(null)
+    private val adapter = PetsAdapter(object : PetsAdapter.PetSelectedListener{
+        override fun onPetSelected(pet: Pet?, imageView: ImageView) {
+            val arguments = Bundle()
+            val extras = FragmentNavigatorExtras(
+                imageView to (pet?.uid ?: "")
+            )
+
+            arguments.putString(ARG_UID, pet?.uid)
+            findNavController().navigate(R.id.action_petsListFragment_to_detailFragment, arguments, null, extras)
+           Log.d("kkk", "${pet?.uid}")
+        }
+    })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,15 +53,9 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
         }
 
         PetsViewModel.data.observe(
-            this,
-            Observer<Map<String, Pet>> {map ->
-                Log.d("kkk", "--------------------------------------------")
-               adapter.updateData(ArrayList(map.values))
-
-            }
+            this.viewLifecycleOwner,
+            Observer<Map<String, Pet>> { adapter.petsList = ArrayList(it.values) }
         )
-
-
 
     }
 

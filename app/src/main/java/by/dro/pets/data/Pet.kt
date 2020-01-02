@@ -8,7 +8,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Pet(
     var uid: String? = "",
-    var name: String? = ""
+    var name: String? = "",
+    var titleImg: String? = ""
 ):Parcelable
 
 

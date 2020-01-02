@@ -1,25 +1,31 @@
 package by.dro.pets.ui
 
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.data.Pet
 
-class PetsAdapter(private var pets: MutableList<Pet>?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PetsAdapter(private val selectedListener: PetSelectedListener?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    fun updateData(pets: MutableList<Pet>?){
-        this.pets = pets
+    var petsList: MutableList<Pet>? = null
+    set(value) {
+        field = value
         notifyDataSetChanged()
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return PetViewHolder(parent)
+        return PetViewHolder(parent, selectedListener)
     }
 
-    override fun getItemCount(): Int = pets?.size ?: 0
+    override fun getItemCount(): Int = petsList?.size ?: 0
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            if(holder is PetViewHolder) holder.bind(pets?.get(position))
+            if(holder is PetViewHolder) holder.bind(petsList?.get(position))
     }
 
 
+    interface PetSelectedListener{
+        fun onPetSelected(pet: Pet?, imageView: ImageView)
+    }
 }
