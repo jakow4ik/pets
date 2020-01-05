@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.transition.TransitionInflater
 import android.util.Log
 import android.view.View
-import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import by.dro.pets.Config
 
 import by.dro.pets.R
 import by.dro.pets.data.Pet
 import by.dro.pets.data.PetsViewModel
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import by.dro.pets.util.load
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 
@@ -20,9 +19,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= 21){
+        if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK){
         sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move) }
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
+        }
 
     }
 
@@ -33,20 +33,19 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         Log.d("kkk", "uid2 = $uid")
         val pet = PetsViewModel.data.value?.get(uid)
         if (pet != null) updateUi(pet)
+
+
     }
 
     private fun updateUi(pet: Pet) {
         Log.d("kkk", "updateUi - uid = ${pet.uid} \n sdk = ${Build.VERSION.SDK_INT}")
 
-        imageView2.also {
+            if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK){
+                imageView2.transitionName = pet.uid}
 
-            if (Build.VERSION.SDK_INT >= 21)
-                it.transitionName = pet.uid
-
-            Glide.with(this)
-                .load(pet.titleImg)
-                .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
-                .into(it)
+        postponeEnterTransition()
+        imageView2.load(pet.titleImg ?: ""){
+            startPostponedEnterTransition()
         }
 
     }

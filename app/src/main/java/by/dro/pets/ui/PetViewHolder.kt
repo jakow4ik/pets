@@ -1,14 +1,13 @@
 package by.dro.pets.ui
 
-import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import by.dro.pets.Config
 import by.dro.pets.R
 import by.dro.pets.data.Pet
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import by.dro.pets.util.load
 import kotlinx.android.synthetic.main.pet_view_holder.view.*
 
 class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelectedListener?):
@@ -27,17 +26,10 @@ class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelected
 
         itemView.uid.text = pet?.uid
 
-        Glide.with(getContext())
-            .load(pet?.titleImg)
-            .apply(RequestOptions.placeholderOf(R.drawable.placeholder))
-            .into(itemView.imageView)
+        itemView.imageView.load(pet?.titleImg ?: "")
 
 
-        if (Build.VERSION.SDK_INT >= 21)
+        if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK)
         itemView.imageView.transitionName = pet?.uid
-    }
-
-    private fun getContext(): Context{
-        return itemView.context
     }
 }
