@@ -2,6 +2,7 @@ package by.dro.pets.ui
 
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.data.Pet
 
@@ -26,6 +27,6 @@ class PetsAdapter(private val selectedListener: PetSelectedListener?): RecyclerV
 
 
     interface PetSelectedListener{
-        fun onPetSelected(pet: Pet?, imageView: ImageView)
+        fun onPetSelected(pet: Pet?, imageView: ImageView, textView: TextView)
     }
 }

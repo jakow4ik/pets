@@ -1,7 +1,9 @@
 package by.dro.pets.util
 
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -45,3 +47,5 @@ fun ImageView.load(url: String, loadOnlyFromCache: Boolean = false, onLoadingFin
         .listener(listener)
         .into(this)
 }
+
+fun RecyclerView.ViewHolder.getContext() : Context = itemView.context

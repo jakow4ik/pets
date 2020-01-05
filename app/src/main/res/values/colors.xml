@@ -2,5 +2,8 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#A5D6A7</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#FFC107</color>
+
+    <color name="titleBackground">#6B6B6B</color>
+    <color name="tableRow">#5B868686</color>
 </resources>

@@ -4,4 +4,32 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="splash_img_txt">Pets</string>
+
+    <string name="description">Описание</string>
+    <string name="character">Характер</string>
+    <string name="breed_characteristics">Характеристики породы</string>
+
+    <string name="popularityRating">Популярность</string>
+    <string name="trainingRating">Тренировка</string>
+    <string name="sizeRating">Размер</string>
+    <string name="mindRating">Разум</string>
+    <string name="protectionRating">Охрана</string>
+    <string name="childrenRating">Отношение с детьми</string>
+    <string name="dexterityRating">Ловкость</string>
+    <string name="moltRating">Линяние</string>
+
+    <string name="standartNumber">Номер стандарта</string>
+    <string name="country">Страна происхождения</string>
+    <string name="using">Использование</string>
+    <string name="size">Размер</string>
+    <string name="weight">Вес</string>
+    <string name="wool">Шерсть</string>
+    <string name="color">Окрас</string>
+    <string name="care">Уход за собакой</string>
+    <string name="lifespan">Продолжительность жизни</string>
+    <string name="problems">Частые болезни и проблемы</string>
+
+    <string name="transition_image">title_pet_image_%s</string>
+    <string name="transition_name">title_pet_name_%s</string>
+
 </resources>

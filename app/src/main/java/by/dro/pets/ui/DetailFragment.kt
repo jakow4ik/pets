@@ -29,24 +29,54 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_24px)
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+
         val uid = arguments?.getString(PetsListFragment.ARG_UID, "")
         Log.d("kkk", "uid2 = $uid")
         val pet = PetsViewModel.data.value?.get(uid)
         if (pet != null) updateUi(pet)
-
 
     }
 
     private fun updateUi(pet: Pet) {
         Log.d("kkk", "updateUi - uid = ${pet.uid} \n sdk = ${Build.VERSION.SDK_INT}")
 
-            if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK){
-                imageView2.transitionName = pet.uid}
+        if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
+            titleImg.transitionName = String.format(getString(R.string.transition_image, pet.uid))
+            name.transitionName = String.format(getString(R.string.transition_name, pet.uid))
+        }
 
         postponeEnterTransition()
-        imageView2.load(pet.titleImg ?: ""){
+        titleImg.load(pet.titleImg ?: "") {
             startPostponedEnterTransition()
         }
+
+        toolbar.title = pet.name
+        name.text = pet.name
+        nameEn.text = pet.nameInternational
+        description.text = pet.description
+        standartNumber.text = pet.standartNumber
+        country.text = pet.country
+        using.text = pet.using
+        size.text = pet.size
+        weight.text = pet.weight
+        wool.text = pet.wool
+        color.text = pet.color
+        character.text = pet.character
+        care.text = pet.care
+        lifespan.text = pet.lifespan
+        problems.text = pet.problems
+
+
+        popularityRating.rating = (pet.popularityRating ?: 0).toFloat()
+        trainingRating.rating = (pet.trainingRating ?: 0).toFloat()
+        sizeRating.rating = (pet.sizeRating ?: 0).toFloat()
+        mindRating.rating = (pet.mindRating ?: 0).toFloat()
+        protectionRating.rating = (pet.protectionRating ?: 0).toFloat()
+        childrenRating.rating = (pet.childrenRating ?: 0).toFloat()
+        dexterityRating.rating = (pet.childrenRating ?: 0).toFloat()
+        moltRating.rating = (pet.moltRating ?: 0).toFloat()
 
     }
 

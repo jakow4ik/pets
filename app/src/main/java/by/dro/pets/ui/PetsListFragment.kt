@@ -6,15 +6,18 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.doOnPreDraw
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import by.dro.pets.R
 import by.dro.pets.data.Pet
 import by.dro.pets.data.PetsViewModel
+import by.dro.pets.util.getContext
 import kotlinx.android.synthetic.main.fragment_pets_list.*
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -23,23 +26,30 @@ import java.util.ArrayList
 
 class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
 
-    companion object{
+    companion object {
         const val ARG_UID = "ARG_UID"
     }
 
 
     private lateinit var database: DatabaseReference
-    private val adapter = PetsAdapter(object : PetsAdapter.PetSelectedListener{
-        override fun onPetSelected(pet: Pet?, imageView: ImageView) {
+    private val adapter = PetsAdapter(object : PetsAdapter.PetSelectedListener {
+        override fun onPetSelected(pet: Pet?, imageView: ImageView, textView: TextView) {
 
-            val arguments = Bundle()
+
             val extras = FragmentNavigatorExtras(
-                imageView to (pet?.uid ?: "")
+                imageView to String.format(getString(R.string.transition_image, pet?.uid)),
+                textView to String.format(getString(R.string.transition_name, pet?.uid))
             )
 
+            val arguments = Bundle()
             arguments.putString(ARG_UID, pet?.uid)
-            findNavController().navigate(R.id.action_petsListFragment_to_detailFragment, arguments, null, extras)
-           Log.d("kkk", "${pet?.uid}")
+            findNavController().navigate(
+                R.id.action_petsListFragment_to_detailFragment,
+                arguments,
+                null,
+                extras
+            )
+            Log.d("kkk", "${pet?.uid}")
 
         }
     })
@@ -49,12 +59,11 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
         database = FirebaseDatabase.getInstance().reference
             .child("pets").child("dogs").child("ru")
 
-        recycler.layoutManager = LinearLayoutManager(context)
+        val linearLayout = LinearLayoutManager(context)
+        recycler.layoutManager = linearLayout
         recycler.adapter = adapter
+        recycler.addItemDecoration(DividerItemDecoration(context, linearLayout.orientation))
 
-        button.setOnClickListener {
-            //            setData()
-        }
 
         PetsViewModel.data.observe(
             this.viewLifecycleOwner,
@@ -67,7 +76,7 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
         }
     }
 
-    private fun setData(){
+    private fun setData() {
         database.push()
         Log.d("kkk", "0 + $database")
         val pet = Pet()
