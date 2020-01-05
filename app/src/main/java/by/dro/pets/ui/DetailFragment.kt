@@ -75,7 +75,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         mindRating.rating = (pet.mindRating ?: 0).toFloat()
         protectionRating.rating = (pet.protectionRating ?: 0).toFloat()
         childrenRating.rating = (pet.childrenRating ?: 0).toFloat()
-        dexterityRating.rating = (pet.childrenRating ?: 0).toFloat()
+        dexterityRating.rating = (pet.dexterityRating ?: 0).toFloat()
         moltRating.rating = (pet.moltRating ?: 0).toFloat()
 
     }
