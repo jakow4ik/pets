@@ -80,9 +80,9 @@ class AboutFragment : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        val params = dialog!!.window!!.attributes
-        params.width = ViewGroup.LayoutParams.MATCH_PARENT
-        params.height = ViewGroup.LayoutParams.MATCH_PARENT
-        dialog!!.window!!.attributes = params as android.view.WindowManager.LayoutParams
+//        val params = dialog!!.window!!.attributes
+//        params.width = ViewGroup.LayoutParams.MATCH_PARENT
+//        params.height = ViewGroup.LayoutParams.MATCH_PARENT
+//        dialog!!.window!!.attributes = params as android.view.WindowManager.LayoutParams
     }
 }

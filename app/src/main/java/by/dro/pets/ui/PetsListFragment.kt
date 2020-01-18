@@ -1,6 +1,7 @@
 package by.dro.pets.ui
 
 
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.dro.pets.Config
 
 import by.dro.pets.R
 import by.dro.pets.data.Pet
@@ -48,13 +50,20 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
 
             val arguments = Bundle()
             arguments.putString(ARG_UID, pet?.uid)
-            findNavController().navigate(
-                R.id.action_petsListFragment_to_detailFragment,
-                arguments,
-                null,
-                extras
-            )
-            Log.d("kkk", "${pet?.uid}")
+
+            if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
+                findNavController().navigate(
+                    R.id.action_petsListFragment_to_detailFragment,
+                    arguments,
+                    null,
+                    extras
+                )
+            } else{
+                findNavController().navigate(
+                    R.id.action_petsListFragment_to_detailFragment,
+                    arguments
+                )
+            }
 
         }
     })
@@ -66,6 +75,8 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
         searchBar.setNavButtonEnabled(true)
         searchBar.setOnSearchActionListener(this)
         searchBar.setMaxSuggestionCount(0)
+        searchBar.setHint(getString(android.R.string.search_go))
+        searchBar.setPlaceHolder(getString(R.string.app_name))
         searchBar.addTextChangeListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
 
@@ -76,7 +87,6 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("kkk", "textChange")
                 search(s)
 
             }
@@ -130,7 +140,7 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
 
     override fun onButtonClicked(buttonCode: Int) {
         when (buttonCode) {
-            MaterialSearchBar.BUTTON_NAVIGATION -> {/*setData()*/}
+            MaterialSearchBar.BUTTON_NAVIGATION -> {AboutFragment.show(parentFragmentManager)}
             MaterialSearchBar.BUTTON_SPEECH -> { }
             MaterialSearchBar.BUTTON_BACK -> {searchBar.disableSearch()}
         }
@@ -144,16 +154,5 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
         Log.d("kkkl", text.toString())
     }
 
-
-    override fun onResume() {
-        super.onResume()
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-
-    }
 }
 

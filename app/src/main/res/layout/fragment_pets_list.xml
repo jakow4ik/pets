@@ -18,16 +18,15 @@ tools:context=".ui.PetsListFragment">
     android:id="@+id/appBarLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?attr/actionBarSize"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/colorPrimary"
+    android:gravity="center"
     app:layout_scrollFlags="scroll|enterAlways">
 
     <com.mancj.materialsearchbar.MaterialSearchBar
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="7dp"
-        android:paddingLeft="7dp"
+        android:padding="7dp"
         app:layout_scrollFlags="scroll|enterAlways"/>
 </com.google.android.material.appbar.AppBarLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
