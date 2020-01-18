@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.transition.TransitionInflater
 import android.util.Log
 import android.view.View
+import android.widget.RatingBar
 import androidx.fragment.app.Fragment
 import by.dro.pets.Config
 
@@ -69,15 +70,24 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         problems.text = pet.problems
 
 
-        popularityRating.rating = (pet.popularityRating ?: 0).toFloat()
-        trainingRating.rating = (pet.trainingRating ?: 0).toFloat()
-        sizeRating.rating = (pet.sizeRating ?: 0).toFloat()
-        mindRating.rating = (pet.mindRating ?: 0).toFloat()
-        protectionRating.rating = (pet.protectionRating ?: 0).toFloat()
-        childrenRating.rating = (pet.childrenRating ?: 0).toFloat()
-        dexterityRating.rating = (pet.dexterityRating ?: 0).toFloat()
-        moltRating.rating = (pet.moltRating ?: 0).toFloat()
+        setRatingBar(popularityRating, pet.popularityRating)
+        setRatingBar(trainingRating, pet.trainingRating)
+        setRatingBar(sizeRating, pet.sizeRating)
+        setRatingBar(mindRating, pet.mindRating)
+        setRatingBar(protectionRating, pet.protectionRating)
+        setRatingBar(childrenRating, pet.childrenRating)
+        setRatingBar(dexterityRating, pet.dexterityRating)
+        setRatingBar(moltRating, pet.moltRating)
 
+    }
+
+    private fun setRatingBar(bar: RatingBar, value: Int?){
+        if ((value ?: 0) >= 0){
+            bar.visibility = View.VISIBLE
+            bar.rating = (value ?: 0).toFloat()
+        }else{
+            bar.visibility = View.INVISIBLE
+        }
     }
 
 
