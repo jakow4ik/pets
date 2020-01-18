@@ -2,6 +2,8 @@ package by.dro.pets.ui
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -17,24 +19,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.dro.pets.R
 import by.dro.pets.data.Pet
 import by.dro.pets.data.PetsViewModel
-import by.dro.pets.util.getContext
 import kotlinx.android.synthetic.main.fragment_pets_list.*
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.mancj.materialsearchbar.MaterialSearchBar
 import java.util.ArrayList
 
 
-class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
+class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBar.OnSearchActionListener {
 
     companion object {
         const val ARG_UID = "ARG_UID"
     }
 
-
     private lateinit var database: DatabaseReference
+    private var listPets: List<Pet>? = null
+
     private val adapter = PetsAdapter(object : PetsAdapter.PetSelectedListener {
         override fun onPetSelected(pet: Pet?, imageView: ImageView, textView: TextView) {
 
+            if(searchBar.isSearchEnabled)
+                searchBar.disableSearch()
 
             val extras = FragmentNavigatorExtras(
                 imageView to String.format(getString(R.string.transition_image, pet?.uid)),
@@ -56,6 +61,27 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        searchBar.setNavButtonEnabled(true)
+        searchBar.setOnSearchActionListener(this)
+        searchBar.setMaxSuggestionCount(0)
+        searchBar.addTextChangeListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.d("kkk", "textChange")
+                search(s)
+
+            }
+        })
+
         database = FirebaseDatabase.getInstance().reference
             .child("pets").child("dogs").child("ru")
 
@@ -67,13 +93,29 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
 
         PetsViewModel.data.observe(
             this.viewLifecycleOwner,
-            Observer<Map<String, Pet>> { adapter.petsList = ArrayList(it.values) }
+            Observer<Map<String, Pet>> {
+                listPets = ArrayList(it.values)
+                adapter.petsList = listPets
+
+            }
         )
 
         postponeEnterTransition()
         recycler.doOnPreDraw {
             startPostponedEnterTransition()
         }
+    }
+
+    private fun search(s: CharSequence?){
+        if (s == null || s == ""){
+            adapter?.petsList = listPets
+            return
+        }
+
+        val result = listPets?.filter { it.name?.contains(s, ignoreCase = true) ?: false }
+
+        adapter?.petsList = result
+
     }
 
     private fun setData() {
@@ -84,6 +126,34 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list) {
         pet.uid = database.child("map").push().key
         database.child("map").child(pet.uid!!).setValue(pet)
         Log.d("kkk", "1 + ${pet.uid}")
+    }
+
+    override fun onButtonClicked(buttonCode: Int) {
+        when (buttonCode) {
+            MaterialSearchBar.BUTTON_NAVIGATION -> {/*setData()*/}
+            MaterialSearchBar.BUTTON_SPEECH -> { }
+            MaterialSearchBar.BUTTON_BACK -> {searchBar.disableSearch()}
+        }
+    }
+
+    override fun onSearchStateChanged(enabled: Boolean) {
+        Log.d("kkkl", enabled.toString())
+    }
+
+    override fun onSearchConfirmed(text: CharSequence?) {
+        Log.d("kkkl", text.toString())
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+
     }
 }
 

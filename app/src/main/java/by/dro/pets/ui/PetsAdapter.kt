@@ -8,7 +8,7 @@ import by.dro.pets.data.Pet
 
 class PetsAdapter(private val selectedListener: PetSelectedListener?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var petsList: MutableList<Pet>? = null
+    var petsList: List<Pet>? = null
     set(value) {
         field = value
         notifyDataSetChanged()
