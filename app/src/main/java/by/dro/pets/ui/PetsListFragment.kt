@@ -141,8 +141,8 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
     override fun onButtonClicked(buttonCode: Int) {
         when (buttonCode) {
             MaterialSearchBar.BUTTON_NAVIGATION -> {
-//                AboutFragment.show(parentFragmentManager)
-            setData()
+                AboutFragment.show(parentFragmentManager)
+//            setData()
             }
             MaterialSearchBar.BUTTON_SPEECH -> { }
             MaterialSearchBar.BUTTON_BACK -> {searchBar.disableSearch()}

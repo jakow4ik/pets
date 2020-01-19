@@ -58,18 +58,18 @@ class AboutFragment : DialogFragment() {
         }
 
         versionName.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(Config.GOOGLE_PLAY_URL)
-            )
-            startActivity(browserIntent)
+//            val browserIntent = Intent(
+//                Intent.ACTION_VIEW,
+//                Uri.parse(Config.GOOGLE_PLAY_URL)
+//            )
+//            startActivity(browserIntent)
         }
         versionNameTxt.setOnClickListener {
-            val browserIntent = Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(Config.GOOGLE_PLAY_URL)
-            )
-            startActivity(browserIntent)
+//            val browserIntent = Intent(
+//                Intent.ACTION_VIEW,
+//                Uri.parse(Config.GOOGLE_PLAY_URL)
+//            )
+//            startActivity(browserIntent)
         }
     }
 
