@@ -1,5 +1,7 @@
 package by.dro.pets.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -7,6 +9,7 @@ import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import by.dro.pets.Config
 
 import by.dro.pets.R
@@ -18,6 +21,9 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment(R.layout.fragment_detail) {
 
+    private var uid :String? = null
+    private var pet :Pet? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK){
@@ -25,19 +31,60 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
             TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         }
 
+//        val intent = activity?.intent
+//        val action: String? = intent?.action
+//        val data: Uri? = intent?.data
+
+
+//        Log.d("DetailFragment", "action - $action")
+//        Log.d("DetailFragment", "uri - $data")
+//        Log.d("DetailFragment", "type - ${data?.getQueryParameter("type")}")
+        PetsViewModel.data.observe(this, Observer { map ->
+            pet = map?.get(uid)
+            pet?.let { updateUi(it) }
+        })
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        toolbar.inflateMenu(R.menu.pet_detail)
+
+        toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_share -> share(pet)
+//                else -> App.instance.toast("Unknown option")
+            }
+            true
+        }
+
+
         toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_24px)
         toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
-        val uid = arguments?.getString(PetsListFragment.ARG_UID, "")
+        uid = arguments?.getString(PetsListFragment.ARG_UID, "")
         Log.d("kkk", "uid2 = $uid")
-        val pet = PetsViewModel.data.value?.get(uid)
-        if (pet != null) updateUi(pet)
+        pet = PetsViewModel.data.value?.get(uid)
+        pet?.let { updateUi(it) }
 
+
+    }
+
+    private fun share(pet: Pet?){
+
+        pet?.let {itPet ->
+            val  typePet = "dog"
+            val link = "https://pets.dro.by/link/?link=https://pets.dro.by/app/?type%3D$typePet%26uid%3D${pet.uid}&apn=by.dro.pets"
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "${itPet.name}  -  $link")
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
     }
 
     private fun updateUi(pet: Pet) {
