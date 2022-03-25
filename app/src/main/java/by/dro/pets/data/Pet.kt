@@ -2,7 +2,7 @@ package by.dro.pets.data
 
 import android.os.Parcelable
 import com.google.firebase.database.IgnoreExtraProperties
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @IgnoreExtraProperties
 @Parcelize

@@ -1,9 +1,8 @@
 package by.dro.pets
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import by.dro.pets.data.ListPets
@@ -16,7 +15,8 @@ import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private lateinit var database: DatabaseReference
-    private val liveData: MutableLiveData<MutableMap<String, Pet>> = PetsViewModel.data as MutableLiveData
+    private val liveData: MutableLiveData<MutableMap<String, Pet>> =
+        PetsViewModel.data as MutableLiveData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         database = FirebaseDatabase.getInstance().reference
             .child("pets").child("dogs").child("ru")
 
-        database.addValueEventListener(object : ValueEventListener{
+        database.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
             }
@@ -47,10 +47,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 val arguments = Bundle()
                 arguments.putString(PetsListFragment.ARG_UID, link?.link?.getQueryParameter("uid"))
                 if (link?.link != null)
-                findNavController(R.id.fragment).navigate(
-                    R.id.action_petsListFragment_to_detailFragment,
-                    arguments
-                )
+                    findNavController(R.id.fragment).navigate(
+                        R.id.action_petsListFragment_to_detailFragment,
+                        arguments
+                    )
 
             }
     }

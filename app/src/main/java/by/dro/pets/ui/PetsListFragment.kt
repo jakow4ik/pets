@@ -17,11 +17,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.dro.pets.Config
-
 import by.dro.pets.R
 import by.dro.pets.data.Pet
 import by.dro.pets.data.PetsViewModel
-import kotlinx.android.synthetic.main.fragment_pets_list.*
+import by.dro.pets.databinding.FragmentPetsListBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.mancj.materialsearchbar.MaterialSearchBar
@@ -29,6 +28,8 @@ import java.util.ArrayList
 
 
 class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBar.OnSearchActionListener {
+
+    private lateinit var binding: FragmentPetsListBinding
 
     companion object {
         const val ARG_UID = "ARG_UID"
@@ -40,8 +41,8 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
     private val adapter = PetsAdapter(object : PetsAdapter.PetSelectedListener {
         override fun onPetSelected(pet: Pet?, imageView: ImageView, textView: TextView) {
 
-            if(searchBar.isSearchEnabled)
-                searchBar.disableSearch()
+            if(binding.searchBar.isSearchEnabled)
+                binding.searchBar.disableSearch()
 
             val extras = FragmentNavigatorExtras(
                 imageView to String.format(getString(R.string.transition_image, pet?.uid)),
@@ -70,14 +71,14 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentPetsListBinding.bind(view)
 
-
-        searchBar.setNavButtonEnabled(true)
-        searchBar.setOnSearchActionListener(this)
-        searchBar.setMaxSuggestionCount(0)
-        searchBar.setHint(getString(android.R.string.search_go))
-        searchBar.setPlaceHolder(getString(R.string.app_name))
-        searchBar.addTextChangeListener(object : TextWatcher{
+        binding.searchBar.setNavButtonEnabled(true)
+        binding.searchBar.setOnSearchActionListener(this)
+        binding.searchBar.setMaxSuggestionCount(0)
+        binding.searchBar.setHint(getString(android.R.string.search_go))
+        binding.searchBar.setPlaceHolder(getString(R.string.app_name))
+        binding.searchBar.addTextChangeListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -96,9 +97,9 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
             .child("pets").child("dogs").child("ru")
 
         val linearLayout = LinearLayoutManager(context)
-        recycler.layoutManager = linearLayout
-        recycler.adapter = adapter
-        recycler.addItemDecoration(DividerItemDecoration(context, linearLayout.orientation))
+        binding.recycler.layoutManager = linearLayout
+        binding.recycler.adapter = adapter
+        binding.recycler.addItemDecoration(DividerItemDecoration(context, linearLayout.orientation))
 
 
         PetsViewModel.data.observe(
@@ -111,20 +112,20 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
         )
 
         postponeEnterTransition()
-        recycler.doOnPreDraw {
+        binding.recycler.doOnPreDraw {
             startPostponedEnterTransition()
         }
     }
 
     private fun search(s: CharSequence?){
         if (s == null || s == ""){
-            adapter?.petsList = listPets
+            adapter.petsList = listPets
             return
         }
 
         val result = listPets?.filter { it.name?.contains(s, ignoreCase = true) ?: false }
 
-        adapter?.petsList = result
+        adapter.petsList = result
 
     }
 
@@ -145,7 +146,7 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
 //            setData()
             }
             MaterialSearchBar.BUTTON_SPEECH -> { }
-            MaterialSearchBar.BUTTON_BACK -> {searchBar.disableSearch()}
+            MaterialSearchBar.BUTTON_BACK -> {binding.searchBar.disableSearch()}
         }
     }
 

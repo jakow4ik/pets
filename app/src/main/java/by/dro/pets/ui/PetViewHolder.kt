@@ -7,16 +7,18 @@ import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.Config
 import by.dro.pets.R
 import by.dro.pets.data.Pet
+import by.dro.pets.databinding.PetViewHolderBinding
 import by.dro.pets.util.getContext
 import by.dro.pets.util.load
-import kotlinx.android.synthetic.main.pet_view_holder.view.*
 
 class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelectedListener?):
     RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(
     R.layout.pet_view_holder, parent, false)) {
+
+    private val binding = PetViewHolderBinding.bind(itemView)
     init {
         itemView.setOnClickListener {
-            selectedListener?.onPetSelected(pet, itemView.imageView, itemView.name)
+            selectedListener?.onPetSelected(pet, binding.imageView, binding.name)
         }
     }
 
@@ -25,14 +27,14 @@ class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelected
     fun bind(pet: Pet?) {
         this.pet = pet
 
-        itemView.name.text = pet?.name
+        binding.name.text = pet?.name
 
-        itemView.imageView.load(pet?.titleImg ?: "")
+        binding.imageView.load(pet?.titleImg ?: "")
 
 
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK){
-            itemView.imageView.transitionName = String.format(getContext().getString(R.string.transition_image, pet?.uid))
-            itemView.name.transitionName = String.format(getContext().getString(R.string.transition_name, pet?.uid))
+            binding.imageView.transitionName = String.format(getContext().getString(R.string.transition_image, pet?.uid))
+            binding.name.transitionName = String.format(getContext().getString(R.string.transition_name, pet?.uid))
         }
     }
 }

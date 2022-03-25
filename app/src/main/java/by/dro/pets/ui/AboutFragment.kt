@@ -11,13 +11,15 @@ import androidx.fragment.app.FragmentManager
 import by.dro.pets.R
 
 import by.dro.pets.BuildConfig
-import kotlinx.android.synthetic.main.fragment_about.*
 import android.content.Intent
 import android.net.Uri
 import by.dro.pets.Config
+import by.dro.pets.databinding.FragmentAboutBinding
 
 
 class AboutFragment : DialogFragment() {
+
+    private lateinit var binding: FragmentAboutBinding
 
     companion object {
         private const val FRAGMENT_TAG = "about_dialog"
@@ -32,6 +34,8 @@ class AboutFragment : DialogFragment() {
         }
     }
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,29 +46,29 @@ class AboutFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAboutBinding.bind(view)
+        binding.versionName.text = BuildConfig.VERSION_NAME
+        binding.close.setOnClickListener { dismiss() }
 
-        versionName.text = BuildConfig.VERSION_NAME
-        close.setOnClickListener { dismiss() }
-
-        github.setOnClickListener {
+        binding.github.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(Config.GITHUB_URL))
             startActivity(browserIntent)
         }
 
-        linkedin.setOnClickListener {
+        binding.linkedin.setOnClickListener {
             val browserIntent =
                 Intent(Intent.ACTION_VIEW, Uri.parse(Config.LINKEDIN_URL))
             startActivity(browserIntent)
         }
 
-        versionName.setOnClickListener {
+        binding.versionName.setOnClickListener {
 //            val browserIntent = Intent(
 //                Intent.ACTION_VIEW,
 //                Uri.parse(Config.GOOGLE_PLAY_URL)
 //            )
 //            startActivity(browserIntent)
         }
-        versionNameTxt.setOnClickListener {
+        binding.versionNameTxt.setOnClickListener {
 //            val browserIntent = Intent(
 //                Intent.ACTION_VIEW,
 //                Uri.parse(Config.GOOGLE_PLAY_URL)
