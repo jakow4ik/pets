@@ -1,4 +1,4 @@
-package by.dro.pets.ui
+package by.dro.pets.presentation.pets_list
 
 
 import android.os.Build
@@ -6,42 +6,42 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.doOnPreDraw
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.dro.pets.Config
 import by.dro.pets.R
-import by.dro.pets.data.Pet
 import by.dro.pets.data.PetsViewModel
 import by.dro.pets.databinding.FragmentPetsListBinding
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import by.dro.pets.domain.entities.Dog
+import by.dro.pets.presentation.about.AboutFragment
 import com.mancj.materialsearchbar.MaterialSearchBar
-import java.util.ArrayList
 
 
-class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBar.OnSearchActionListener {
+class PetsListFragment : Fragment(R.layout.fragment_pets_list),
+    MaterialSearchBar.OnSearchActionListener {
 
     private lateinit var binding: FragmentPetsListBinding
+    private val viewModel: PetsListViewModel by viewModels()
 
     companion object {
         const val ARG_UID = "ARG_UID"
     }
 
-    private lateinit var database: DatabaseReference
-    private var listPets: List<Pet>? = null
+    //    private lateinit var database: DatabaseReference
+    private var listPets: List<Dog>? = null
 
     private val adapter = PetsAdapter(object : PetsAdapter.PetSelectedListener {
-        override fun onPetSelected(pet: Pet?, imageView: ImageView, textView: TextView) {
+        override fun onPetSelected(pet: Dog?, imageView: ImageView, textView: TextView) {
 
-            if(binding.searchBar.isSearchEnabled)
+            if (binding.searchBar.isSearchEnabled)
                 binding.searchBar.disableSearch()
 
             val extras = FragmentNavigatorExtras(
@@ -59,7 +59,7 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
                     null,
                     extras
                 )
-            } else{
+            } else {
                 findNavController().navigate(
                     R.id.action_petsListFragment_to_detailFragment,
                     arguments
@@ -78,7 +78,7 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
         binding.searchBar.setMaxSuggestionCount(0)
         binding.searchBar.setHint(getString(android.R.string.search_go))
         binding.searchBar.setPlaceHolder(getString(R.string.app_name))
-        binding.searchBar.addTextChangeListener(object : TextWatcher{
+        binding.searchBar.addTextChangeListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -93,8 +93,8 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
             }
         })
 
-        database = FirebaseDatabase.getInstance().reference
-            .child("pets").child("dogs").child("ru")
+//        database = FirebaseDatabase.getInstance().reference
+//            .child("pets").child("dogs").child("ru")
 
         val linearLayout = LinearLayoutManager(context)
         binding.recycler.layoutManager = linearLayout
@@ -104,10 +104,9 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
 
         PetsViewModel.data.observe(
             this.viewLifecycleOwner,
-            Observer<Map<String, Pet>> {
-                listPets = ArrayList(it.values)
+            {
+                listPets = it.values.toList()
                 adapter.petsList = listPets
-
             }
         )
 
@@ -117,27 +116,27 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
         }
     }
 
-    private fun search(s: CharSequence?){
-        if (s == null || s == ""){
+    private fun search(s: CharSequence?) {
+        if (s == null || s == "") {
             adapter.petsList = listPets
             return
         }
 
-        val result = listPets?.filter { it.name?.contains(s, ignoreCase = true) ?: false }
+        val result = listPets?.filter { it.name.contains(s, ignoreCase = true) }
 
         adapter.petsList = result
 
     }
 
-    private fun setData() {
-        database.push()
-        Log.d("kkk", "0 + $database")
-        val pet = Pet()
-        pet.name = "korgi"
-        pet.uid = database.child("map").push().key
-        database.child("map").child(pet.uid!!).setValue(pet)
-        Log.d("kkk", "1 + ${pet.uid}")
-    }
+//    private fun setData() {
+//        database.push()
+//        Log.d("kkk", "0 + $database")
+//        val pet = Pet()
+//        pet.name = "korgi"
+//        pet.uid = database.child("map").push().key
+//        database.child("map").child(pet.uid!!).setValue(pet)
+//        Log.d("kkk", "1 + ${pet.uid}")
+//    }
 
     override fun onButtonClicked(buttonCode: Int) {
         when (buttonCode) {
@@ -145,8 +144,10 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list), MaterialSearchBa
                 AboutFragment.show(parentFragmentManager)
 //            setData()
             }
-            MaterialSearchBar.BUTTON_SPEECH -> { }
-            MaterialSearchBar.BUTTON_BACK -> {binding.searchBar.disableSearch()}
+            MaterialSearchBar.BUTTON_SPEECH -> {}
+            MaterialSearchBar.BUTTON_BACK -> {
+                binding.searchBar.disableSearch()
+            }
         }
     }
 

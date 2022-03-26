@@ -1,4 +1,4 @@
-package by.dro.pets.ui
+package by.dro.pets.presentation.about
 
 
 import android.os.Bundle

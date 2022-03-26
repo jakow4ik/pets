@@ -1,14 +1,14 @@
-package by.dro.pets.ui
+package by.dro.pets.presentation.pets_list
 
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import by.dro.pets.data.Pet
+import by.dro.pets.domain.entities.Dog
 
 class PetsAdapter(private val selectedListener: PetSelectedListener?): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var petsList: List<Pet>? = null
+    var petsList: List<Dog>? = null
     set(value) {
         field = value
         notifyDataSetChanged()
@@ -27,6 +27,6 @@ class PetsAdapter(private val selectedListener: PetSelectedListener?): RecyclerV
 
 
     interface PetSelectedListener{
-        fun onPetSelected(pet: Pet?, imageView: ImageView, textView: TextView)
+        fun onPetSelected(pet: Dog?, imageView: ImageView, textView: TextView)
     }
 }

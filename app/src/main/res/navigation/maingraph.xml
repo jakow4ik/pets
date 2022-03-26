@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/petsListFragment"
-        android:name="by.dro.pets.ui.PetsListFragment"
+        android:name="by.dro.pets.presentation.pets_list.PetsListFragment"
         android:label="fragment_pets_list"
         tools:layout="@layout/fragment_pets_list">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="by.dro.pets.ui.DetailFragment"
+        android:name="by.dro.pets.presentation.pets_details.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <deepLink

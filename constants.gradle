@@ -3,10 +3,10 @@ ext {
     targetSdkVersion = 31
     compileSdkVersion = 31
     buildToolsVersion = '30.0.2'
-    appVersion = "1.9"
+    appVersion = "2.0.0"
 
     multidex_version = "2.0.1"
-
-    multidex = "androidx.multidex:multidex:$multidex_version"
+    coroutines_version = "1.6.0"
+    lifecycle_version = "2.4.1"
 
 }

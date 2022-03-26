@@ -1,4 +1,4 @@
-package by.dro.pets.ui
+package by.dro.pets.presentation.pets_list
 
 import android.os.Build
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.Config
 import by.dro.pets.R
-import by.dro.pets.data.Pet
 import by.dro.pets.databinding.PetViewHolderBinding
+import by.dro.pets.domain.entities.Dog
 import by.dro.pets.util.getContext
 import by.dro.pets.util.load
 
@@ -22,9 +22,9 @@ class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelected
         }
     }
 
-    private var pet: Pet? = null
+    private var pet: Dog? = null
 
-    fun bind(pet: Pet?) {
+    fun bind(pet: Dog?) {
         this.pet = pet
 
         binding.name.text = pet?.name

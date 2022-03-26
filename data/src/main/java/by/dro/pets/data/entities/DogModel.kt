@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @IgnoreExtraProperties
 @Parcelize
-data class Pet(
+data class DogModel(
     var uid: String? = "",
     var name: String? = "",
     var nameInternational: String? = "",
@@ -31,12 +31,12 @@ data class Pet(
     var care: String? = "",
     var lifespan: String? = "",
     var problems: String? = ""
-):Parcelable
+) : Parcelable
 
 
 @IgnoreExtraProperties
 @Parcelize
 data class ListPets(
     var name: String? = "",
-    var map: MutableMap<String, Pet> = HashMap()
-):Parcelable
+    var map: MutableMap<String, DogModel> = HashMap()
+) : Parcelable

@@ -1,4 +1,4 @@
-package by.dro.pets.ui
+package by.dro.pets.presentation.pets_details
 
 import android.content.Intent
 import android.os.Build
@@ -8,12 +8,12 @@ import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import by.dro.pets.Config
 import by.dro.pets.R
-import by.dro.pets.data.Pet
 import by.dro.pets.data.PetsViewModel
 import by.dro.pets.databinding.FragmentDetailBinding
+import by.dro.pets.domain.entities.Dog
+import by.dro.pets.presentation.pets_list.PetsListFragment
 import by.dro.pets.util.load
 
 
@@ -21,7 +21,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     private lateinit var binding: FragmentDetailBinding
     private var uid: String? = null
-    private var pet: Pet? = null
+    private var pet: Dog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 //        Log.d("DetailFragment", "action - $action")
 //        Log.d("DetailFragment", "uri - $data")
 //        Log.d("DetailFragment", "type - ${data?.getQueryParameter("type")}")
-        PetsViewModel.data.observe(this, Observer { map ->
+        PetsViewModel.data.observe(this, { map ->
             pet = map?.get(uid)
             pet?.let { updateUi(it) }
         })
@@ -70,7 +70,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     }
 
-    private fun share(pet: Pet?) {
+    private fun share(pet: Dog?) {
 
         pet?.let { itPet ->
             val typePet = "dog"
@@ -87,7 +87,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    private fun updateUi(pet: Pet) {
+    private fun updateUi(pet: Dog) {
         Log.d("kkk", "updateUi - uid = ${pet.uid} \n sdk = ${Build.VERSION.SDK_INT}")
 
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
@@ -96,7 +96,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         }
 
         postponeEnterTransition()
-        binding.titleImg.load(pet.titleImg ?: "") {
+        binding.titleImg.load(pet.titleImg) {
             startPostponedEnterTransition()
         }
 
