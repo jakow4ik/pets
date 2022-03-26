@@ -11,20 +11,25 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.dro.pets.Config
 import by.dro.pets.R
-import by.dro.pets.data.PetsViewModel
 import by.dro.pets.databinding.FragmentPetsListBinding
 import by.dro.pets.domain.entities.Dog
 import by.dro.pets.presentation.about.AboutFragment
 import com.mancj.materialsearchbar.MaterialSearchBar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class PetsListFragment : Fragment(R.layout.fragment_pets_list),
     MaterialSearchBar.OnSearchActionListener {
 
@@ -36,7 +41,6 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list),
     }
 
     //    private lateinit var database: DatabaseReference
-    private var listPets: List<Dog>? = null
 
     private val adapter = PetsAdapter(object : PetsAdapter.PetSelectedListener {
         override fun onPetSelected(pet: Dog?, imageView: ImageView, textView: TextView) {
@@ -101,14 +105,13 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list),
         binding.recycler.adapter = adapter
         binding.recycler.addItemDecoration(DividerItemDecoration(context, linearLayout.orientation))
 
-
-        PetsViewModel.data.observe(
-            this.viewLifecycleOwner,
-            {
-                listPets = it.values.toList()
-                adapter.petsList = listPets
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.dogs.collect {
+                    adapter.petsList = it
+                }
             }
-        )
+        }
 
         postponeEnterTransition()
         binding.recycler.doOnPreDraw {
@@ -118,11 +121,11 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list),
 
     private fun search(s: CharSequence?) {
         if (s == null || s == "") {
-            adapter.petsList = listPets
+            adapter.petsList = viewModel.dogs.value
             return
         }
 
-        val result = listPets?.filter { it.name.contains(s, ignoreCase = true) }
+        val result = viewModel.dogs.value.filter { it.name.contains(s, ignoreCase = true) }
 
         adapter.petsList = result
 

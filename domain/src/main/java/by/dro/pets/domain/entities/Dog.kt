@@ -25,4 +25,33 @@ data class Dog(
     val care: String,
     val lifespan: String,
     val problems: String
-)
+) {
+    companion object {
+        val EMPTY = Dog(
+            uid = "",
+            name = "",
+            nameInternational = "",
+            titleImg = "",
+            description = "",
+            popularityRating = 0,
+            trainingRating = 0,
+            sizeRating = 0,
+            mindRating = 0,
+            protectionRating = 0,
+            childrenRating = 0,
+            dexterityRating = 0,
+            moltRating = 0,
+            standartNumber = "",
+            country = "",
+            using = "",
+            size = "",
+            weight = "",
+            wool = "",
+            color = "",
+            character = "",
+            care = "",
+            lifespan = "",
+            problems = "",
+        )
+    }
+}

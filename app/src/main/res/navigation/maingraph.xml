@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="by.dro.pets.presentation.pets_details.DetailFragment"
+        android:name="by.dro.pets.presentation.pets_details.PetsDetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <deepLink

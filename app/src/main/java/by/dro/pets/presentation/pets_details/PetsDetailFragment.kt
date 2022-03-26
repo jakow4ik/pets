@@ -8,20 +8,25 @@ import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import by.dro.pets.Config
 import by.dro.pets.R
-import by.dro.pets.data.PetsViewModel
 import by.dro.pets.databinding.FragmentDetailBinding
 import by.dro.pets.domain.entities.Dog
 import by.dro.pets.presentation.pets_list.PetsListFragment
 import by.dro.pets.util.load
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-
-class DetailFragment : Fragment(R.layout.fragment_detail) {
+@AndroidEntryPoint
+class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
 
     private lateinit var binding: FragmentDetailBinding
+    private val viewModel: PetsDetailViewModel by viewModels()
     private var uid: String? = null
-    private var pet: Dog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,19 +35,13 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         }
 
-//        val intent = activity?.intent
-//        val action: String? = intent?.action
-//        val data: Uri? = intent?.data
-
-
-//        Log.d("DetailFragment", "action - $action")
-//        Log.d("DetailFragment", "uri - $data")
-//        Log.d("DetailFragment", "type - ${data?.getQueryParameter("type")}")
-        PetsViewModel.data.observe(this, { map ->
-            pet = map?.get(uid)
-            pet?.let { updateUi(it) }
-        })
-
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.dog.collect {
+                    updateUi(it)
+                }
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,7 +51,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_share -> share(pet)
+                R.id.action_share -> share(viewModel.dog.value)
 //                else -> App.instance.toast("Unknown option")
             }
             true
@@ -64,9 +63,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         uid = arguments?.getString(PetsListFragment.ARG_UID, "")
         Log.d("kkk", "uid2 = $uid")
-        pet = PetsViewModel.data.value?.get(uid)
-        pet?.let { updateUi(it) }
-
 
     }
 
@@ -91,8 +87,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         Log.d("kkk", "updateUi - uid = ${pet.uid} \n sdk = ${Build.VERSION.SDK_INT}")
 
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
-            binding.titleImg.transitionName = String.format(getString(R.string.transition_image, pet.uid))
-            binding.name.transitionName = String.format(getString(R.string.transition_name, pet.uid))
+            binding.titleImg.transitionName =
+                String.format(getString(R.string.transition_image, pet.uid))
+            binding.name.transitionName =
+                String.format(getString(R.string.transition_name, pet.uid))
         }
 
         postponeEnterTransition()

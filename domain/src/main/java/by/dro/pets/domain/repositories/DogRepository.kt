@@ -5,9 +5,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface DogRepository {
 
-    fun getDogs(): Flow<Map<String, Dog>>
+    fun getDogs(): Flow<List<Dog>>
 
-    fun getBookmarks(): Flow<Map<String, Dog>>
+    fun getBookmarks(): Flow<List<Dog>>
 
     fun bookmark(dog: Dog)
 

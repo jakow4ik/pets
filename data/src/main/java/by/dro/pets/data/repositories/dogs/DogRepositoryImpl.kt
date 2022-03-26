@@ -10,18 +10,18 @@ class DogRepositoryImpl(
     private val bookmarkStorage: BookmarkStorage,
     private val dogDataStore: DogDataStore,
 ) : DogRepository {
-    override fun getDogs(): Flow<Map<String, Dog>> {
+    override fun getDogs(): Flow<List<Dog>> {
         return dogDataStore.getDogs().map { listPets ->
-            listPets.map.mapValues {
-                it.value.toDomainModel()
+            listPets.map.values.map {
+                it.toDomainModel()
             }
         }
     }
 
-    override fun getBookmarks(): Flow<Map<String, Dog>> {
+    override fun getBookmarks(): Flow<List<Dog>> {
         return getDogs().map { listDogs ->
             listDogs.filter {
-                bookmarkStorage.isBookmark(it.value.uid)
+                bookmarkStorage.isBookmark(it.uid)
             }
         }
     }

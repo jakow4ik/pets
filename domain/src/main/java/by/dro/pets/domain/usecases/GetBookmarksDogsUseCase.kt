@@ -5,7 +5,7 @@ import by.dro.pets.domain.repositories.DogRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetBookmarksDogsUseCase(private val repository: DogRepository) :
-    UseCase<Unit, Flow<Map<String, Dog>>> {
+    UseCase<Unit, Flow<List<Dog>>> {
 
     override fun execute(param: Unit) = repository.getBookmarks()
 }
