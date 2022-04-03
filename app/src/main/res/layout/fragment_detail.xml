@@ -33,15 +33,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/titleImg"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/petsImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/placeholder" />
 
-            <TextView
-                android:id="@+id/name"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/petsName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
