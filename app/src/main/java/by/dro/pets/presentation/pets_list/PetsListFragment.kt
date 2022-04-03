@@ -11,14 +11,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.dro.pets.Config
 import by.dro.pets.R
@@ -103,7 +101,7 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list),
         val linearLayout = LinearLayoutManager(context)
         binding.recycler.layoutManager = linearLayout
         binding.recycler.adapter = adapter
-        binding.recycler.addItemDecoration(DividerItemDecoration(context, linearLayout.orientation))
+//        binding.recycler.addItemDecoration(DividerItemDecoration(context, linearLayout.orientation))
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {

@@ -16,7 +16,6 @@ import by.dro.pets.Config
 import by.dro.pets.R
 import by.dro.pets.databinding.FragmentDetailBinding
 import by.dro.pets.domain.entities.Dog
-import by.dro.pets.presentation.pets_list.PetsListFragment
 import by.dro.pets.util.load
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -26,7 +25,6 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
 
     private lateinit var binding: FragmentDetailBinding
     private val viewModel: PetsDetailViewModel by viewModels()
-    private var uid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,9 +59,6 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
         binding.toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_24px)
         binding.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
-        uid = arguments?.getString(PetsListFragment.ARG_UID, "")
-        Log.d("kkk", "uid2 = $uid")
-
     }
 
     private fun share(pet: Dog?) {
@@ -87,19 +82,19 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
         Log.d("kkk", "updateUi - uid = ${pet.uid} \n sdk = ${Build.VERSION.SDK_INT}")
 
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
-            binding.titleImg.transitionName =
+            binding.petsImage.transitionName =
                 String.format(getString(R.string.transition_image, pet.uid))
-            binding.name.transitionName =
+            binding.petsName.transitionName =
                 String.format(getString(R.string.transition_name, pet.uid))
         }
 
         postponeEnterTransition()
-        binding.titleImg.load(pet.titleImg) {
+        binding.petsImage.load(pet.titleImg) {
             startPostponedEnterTransition()
         }
 
         binding.toolbar.title = pet.name
-        binding.name.text = pet.name
+        binding.petsName.text = pet.name
         binding.nameEn.text = pet.nameInternational
         binding.description.text = pet.description
         binding.standartNumber.text = pet.standartNumber

@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="extra_huge_padding">48dp</dimen>
+    <dimen name="huge_padding">32dp</dimen>
+    <dimen name="extra_big_padding">24dp</dimen>
+    <dimen name="big_padding">16dp</dimen>
+    <dimen name="medium_padding">8dp</dimen>
+    <dimen name="small_padding">4dp</dimen>
+    <dimen name="tiny_padding">2dp</dimen>
+
+    <dimen name="title_text_size">20sp</dimen>
+    <dimen name="body_text_size">14sp</dimen>
+
     <dimen name="toolbar_h">64dp</dimen>
+
+    <!--  Pet view holder  -->
+    <dimen name="view_holder_card_radius">10dp</dimen>
+    <dimen name="view_holder_name_margin_top">8dp</dimen>
+    <dimen name="view_holder_type_margin_top">8dp</dimen>
+    <dimen name="view_holder_rating_width">40dp</dimen>
+    <dimen name="view_holder_rating_drawable_padding">5dp</dimen>
+    <integer name="view_holder_name_max_lines">2</integer>
+
 </resources>

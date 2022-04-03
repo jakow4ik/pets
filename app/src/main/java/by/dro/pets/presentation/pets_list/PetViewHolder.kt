@@ -1,8 +1,6 @@
 package by.dro.pets.presentation.pets_list
 
 import android.os.Build
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.Config
 import by.dro.pets.R
@@ -11,14 +9,13 @@ import by.dro.pets.domain.entities.Dog
 import by.dro.pets.util.getContext
 import by.dro.pets.util.load
 
-class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelectedListener?):
-    RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(
-    R.layout.pet_view_holder, parent, false)) {
+class PetViewHolder(private val binding: PetViewHolderBinding, selectedListener: PetsAdapter.PetSelectedListener?) :
+    RecyclerView.ViewHolder(binding.root) {
 
-    private val binding = PetViewHolderBinding.bind(itemView)
+
     init {
         itemView.setOnClickListener {
-            selectedListener?.onPetSelected(pet, binding.imageView, binding.name)
+            selectedListener?.onPetSelected(pet, binding.petsViewHolderImageIV, binding.petsViewHolderNameTV)
         }
     }
 
@@ -27,14 +24,17 @@ class PetViewHolder(parent: ViewGroup, selectedListener: PetsAdapter.PetSelected
     fun bind(pet: Dog?) {
         this.pet = pet
 
-        binding.name.text = pet?.name
+        binding.petsViewHolderNameTV.text = pet?.name
+        binding.petsViewHolderTypeTV.text = pet?.country
+        binding.petsViewHolderRatingTV.text = pet?.popularityRating.toString()
+        binding.petsViewHolderImageIV.load(pet?.titleImg ?: "")
 
-        binding.imageView.load(pet?.titleImg ?: "")
 
-
-        if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK){
-            binding.imageView.transitionName = String.format(getContext().getString(R.string.transition_image, pet?.uid))
-            binding.name.transitionName = String.format(getContext().getString(R.string.transition_name, pet?.uid))
+        if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
+            binding.petsViewHolderImageIV.transitionName =
+                String.format(getContext().getString(R.string.transition_image, pet?.uid))
+            binding.petsViewHolderNameTV.transitionName =
+                String.format(getContext().getString(R.string.transition_name, pet?.uid))
         }
     }
 }

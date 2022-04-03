@@ -28,6 +28,9 @@
             </intent-filter>
             <nav-graph android:value="@navigation/maingraph" />
         </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
     </application>
 

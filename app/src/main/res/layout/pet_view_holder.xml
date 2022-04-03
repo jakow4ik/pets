@@ -1,52 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/big_padding"
+    android:layout_marginVertical="@dimen/medium_padding"
+    android:orientation="vertical"
+    app:cardCornerRadius="@dimen/view_holder_card_radius"
+    app:cardElevation="0dp"
+    >
 
-    <ImageView
-        android:id="@+id/imageView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/placeholder" />
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/big_padding"
+        >
 
-    <View
-        android:id="@+id/viewBackground"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:background="@drawable/gradient_view_holder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/petsViewHolderImageIV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="h,1:0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/dog_placeholder"
+            />
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:maxLines="1"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="Корги" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/petsViewHolderNameTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/big_padding"
+            android:layout_marginTop="@dimen/view_holder_name_margin_top"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway_medium"
+            android:maxLines="@integer/view_holder_name_max_lines"
+            android:textColor="@color/color_text_main"
+            android:textSize="@dimen/title_text_size"
+            app:layout_constraintEnd_toStartOf="@id/petsViewHolderRatingTV"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/petsViewHolderImageIV"
+            tools:text="Корги"
+            />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/petsViewHolderRatingTV"
+            android:layout_width="@dimen/view_holder_rating_width"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/big_padding"
+            android:drawablePadding="@dimen/view_holder_rating_drawable_padding"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway"
+            android:gravity="bottom"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/color_text_main"
+            android:textSize="@dimen/body_text_size"
+            app:drawableStartCompat="@drawable/ic_star"
+            app:layout_constraintBaseline_toBaselineOf="@id/petsViewHolderNameTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="4.6"
+            />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/petsViewHolderTypeTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/big_padding"
+            android:layout_marginTop="@dimen/view_holder_type_margin_top"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/color_text_main"
+            android:textSize="@dimen/body_text_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/petsViewHolderNameTV"
+            tools:text="Гончая, Борзая"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

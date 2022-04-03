@@ -38,7 +38,7 @@ fun ImageView.load(url: String, loadOnlyFromCache: Boolean = false, onLoadingFin
         }
     }
 
-    val requestOptions = RequestOptions.placeholderOf(R.drawable.placeholder)
+    val requestOptions = RequestOptions.placeholderOf(R.drawable.dog_placeholder)
         .dontTransform().onlyRetrieveFromCache(loadOnlyFromCache)
 
     Glide.with(this)
