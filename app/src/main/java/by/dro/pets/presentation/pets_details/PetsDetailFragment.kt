@@ -34,14 +34,14 @@ class PetsDetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBin
     }
 
     override fun initView(vb: FragmentDetailBinding) {
-        vb.toolbar.inflateMenu(R.menu.pet_detail)
-        vb.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_share -> share(viewModel.dog.value)
+//        vb.toolbar.inflateMenu(R.menu.pet_detail)
+//        vb.toolbar.setOnMenuItemClickListener {
+//            when (it.itemId) {
+//                R.id.action_share -> share(viewModel.dog.value)
 //                else -> App.instance.toast("Unknown option")
-            }
-            true
-        }
+//            }
+//            true
+//        }
         vb.toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_24px)
         vb.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         lifecycleScope.launch {
