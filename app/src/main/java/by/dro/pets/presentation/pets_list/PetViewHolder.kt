@@ -21,20 +21,20 @@ class PetViewHolder(private val binding: PetViewHolderBinding, selectedListener:
 
     private var pet: Dog? = null
 
-    fun bind(pet: Dog?) {
+    fun bind(pet: Dog) {
         this.pet = pet
 
-        binding.petsViewHolderNameTV.text = pet?.name
-        binding.petsViewHolderTypeTV.text = pet?.country
-        binding.petsViewHolderRatingTV.text = pet?.popularityRating.toString()
-        binding.petsViewHolderImageIV.load(pet?.titleImg ?: "")
+        binding.petsViewHolderNameTV.text = pet.name
+        binding.petsViewHolderTypeTV.text = pet.country
+        binding.petsViewHolderRatingTV.text = pet.popularityRating.toString()
+        binding.petsViewHolderImageIV.load(pet.titleImg)
 
 
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
             binding.petsViewHolderImageIV.transitionName =
-                String.format(getContext().getString(R.string.transition_image, pet?.uid))
+                String.format(getContext().getString(R.string.transition_image, pet.uid))
             binding.petsViewHolderNameTV.transitionName =
-                String.format(getContext().getString(R.string.transition_name, pet?.uid))
+                String.format(getContext().getString(R.string.transition_name, pet.uid))
         }
     }
 }

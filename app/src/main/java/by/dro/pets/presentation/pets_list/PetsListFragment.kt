@@ -5,12 +5,9 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.doOnPreDraw
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -23,15 +20,15 @@ import by.dro.pets.R
 import by.dro.pets.databinding.FragmentPetsListBinding
 import by.dro.pets.domain.entities.Dog
 import by.dro.pets.presentation.about.AboutFragment
+import by.dro.pets.presentation.base.BaseFragment
 import com.mancj.materialsearchbar.MaterialSearchBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PetsListFragment : Fragment(R.layout.fragment_pets_list),
+class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPetsListBinding::inflate),
     MaterialSearchBar.OnSearchActionListener {
 
-    private lateinit var binding: FragmentPetsListBinding
     private val viewModel: PetsListViewModel by viewModels()
 
     companion object {
@@ -71,62 +68,52 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list),
         }
     })
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentPetsListBinding.bind(view)
+    override fun initView(vb: FragmentPetsListBinding) {
+        vb.searchBar.setNavButtonEnabled(true)
+        vb.searchBar.setOnSearchActionListener(this)
+        vb.searchBar.setMaxSuggestionCount(0)
+        vb.searchBar.setHint(getString(android.R.string.search_go))
+        vb.searchBar.setPlaceHolder(getString(R.string.app_name))
+        vb.searchBar.addTextChangeListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) = Unit
 
-        binding.searchBar.setNavButtonEnabled(true)
-        binding.searchBar.setOnSearchActionListener(this)
-        binding.searchBar.setMaxSuggestionCount(0)
-        binding.searchBar.setHint(getString(android.R.string.search_go))
-        binding.searchBar.setPlaceHolder(getString(R.string.app_name))
-        binding.searchBar.addTextChangeListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
+                Unit
 
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) =
                 search(s)
-
-            }
         })
 
 //        database = FirebaseDatabase.getInstance().reference
 //            .child("pets").child("dogs").child("ru")
 
         val linearLayout = LinearLayoutManager(context)
-        binding.recycler.layoutManager = linearLayout
-        binding.recycler.adapter = adapter
-//        binding.recycler.addItemDecoration(DividerItemDecoration(context, linearLayout.orientation))
+        vb.recycler.layoutManager = linearLayout
+        vb.recycler.adapter = adapter
 
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.dogs.collect {
-                    adapter.petsList = it
+                    adapter.submitList(it)
                 }
             }
         }
-
         postponeEnterTransition()
-        binding.recycler.doOnPreDraw {
+        vb.recycler.doOnPreDraw {
             startPostponedEnterTransition()
         }
     }
 
     private fun search(s: CharSequence?) {
         if (s == null || s == "") {
-            adapter.petsList = viewModel.dogs.value
+            adapter.submitList(viewModel.dogs.value)
             return
         }
-
-        val result = viewModel.dogs.value.filter { it.name.contains(s, ignoreCase = true) }
-
-        adapter.petsList = result
-
+        val result = viewModel.dogs.value.filter {
+            it.name.contains(s, ignoreCase = true)
+                    || it.nameInternational.contains(s, ignoreCase = true)
+        }
+        adapter.submitList(result)
     }
 
 //    private fun setData() {
@@ -153,12 +140,11 @@ class PetsListFragment : Fragment(R.layout.fragment_pets_list),
     }
 
     override fun onSearchStateChanged(enabled: Boolean) {
-        Log.d("kkkl", enabled.toString())
+//        Log.d("kkkl", enabled.toString())
     }
 
     override fun onSearchConfirmed(text: CharSequence?) {
-        Log.d("kkkl", text.toString())
+//        Log.d("kkkl", text.toString())
     }
-
 }
 

@@ -28,5 +28,4 @@ class PetsDetailViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.Eagerly, Dog.EMPTY)
 
-
 }

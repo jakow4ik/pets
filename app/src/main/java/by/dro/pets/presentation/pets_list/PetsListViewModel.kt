@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PetsListViewModel @Inject constructor(
-    private val getDogsUseCase: GetDogsUseCase,
+    getDogsUseCase: GetDogsUseCase,
 ) : ViewModel() {
 
     val dogs: StateFlow<List<Dog>> = getDogsUseCase

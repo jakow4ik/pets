@@ -2,7 +2,6 @@ package by.dro.pets.presentation
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import by.dro.pets.R
@@ -12,8 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
-
-    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -33,7 +30,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                         R.id.action_petsListFragment_to_detailFragment,
                         arguments
                     )
-
             }
     }
 }

@@ -7,7 +7,6 @@ import android.transition.TransitionInflater
 import android.util.Log
 import android.view.View
 import android.widget.RatingBar
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,14 +15,14 @@ import by.dro.pets.Config
 import by.dro.pets.R
 import by.dro.pets.databinding.FragmentDetailBinding
 import by.dro.pets.domain.entities.Dog
+import by.dro.pets.presentation.base.BaseFragment
 import by.dro.pets.util.load
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
+class PetsDetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
 
-    private lateinit var binding: FragmentDetailBinding
     private val viewModel: PetsDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,9 +31,21 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
             sharedElementEnterTransition =
                 TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         }
+    }
 
+    override fun initView(vb: FragmentDetailBinding) {
+        vb.toolbar.inflateMenu(R.menu.pet_detail)
+        vb.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_share -> share(viewModel.dog.value)
+//                else -> App.instance.toast("Unknown option")
+            }
+            true
+        }
+        vb.toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_24px)
+        vb.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
         lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.dog.collect {
                     updateUi(it)
                 }
@@ -42,27 +53,7 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = FragmentDetailBinding.bind(view)
-        binding.toolbar.inflateMenu(R.menu.pet_detail)
-
-        binding.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.action_share -> share(viewModel.dog.value)
-//                else -> App.instance.toast("Unknown option")
-            }
-            true
-        }
-
-
-        binding.toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_24px)
-        binding.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
-
-    }
-
     private fun share(pet: Dog?) {
-
         pet?.let { itPet ->
             val typePet = "dog"
             val link =
@@ -72,7 +63,6 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
                 putExtra(Intent.EXTRA_TEXT, "${itPet.name}  -  $link")
                 type = "text/plain"
             }
-
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
         }
@@ -80,19 +70,16 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
 
     private fun updateUi(pet: Dog) {
         Log.d("kkk", "updateUi - uid = ${pet.uid} \n sdk = ${Build.VERSION.SDK_INT}")
-
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
             binding.petsImage.transitionName =
                 String.format(getString(R.string.transition_image, pet.uid))
             binding.petsName.transitionName =
                 String.format(getString(R.string.transition_name, pet.uid))
         }
-
         postponeEnterTransition()
         binding.petsImage.load(pet.titleImg) {
             startPostponedEnterTransition()
         }
-
         binding.toolbar.title = pet.name
         binding.petsName.text = pet.name
         binding.nameEn.text = pet.nameInternational
@@ -109,7 +96,6 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
         binding.lifespan.text = pet.lifespan
         binding.problems.text = pet.problems
 
-
         setRatingBar(binding.popularityRating, pet.popularityRating)
         setRatingBar(binding.trainingRating, pet.trainingRating)
         setRatingBar(binding.sizeRating, pet.sizeRating)
@@ -118,7 +104,6 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
         setRatingBar(binding.childrenRating, pet.childrenRating)
         setRatingBar(binding.dexterityRating, pet.dexterityRating)
         setRatingBar(binding.moltRating, pet.moltRating)
-
     }
 
     private fun setRatingBar(bar: RatingBar, value: Int?) {
@@ -129,6 +114,4 @@ class PetsDetailFragment : Fragment(R.layout.fragment_detail) {
             bar.visibility = View.INVISIBLE
         }
     }
-
-
 }

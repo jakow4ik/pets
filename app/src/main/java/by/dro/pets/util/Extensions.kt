@@ -12,7 +12,11 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 
-fun ImageView.load(url: String, loadOnlyFromCache: Boolean = false, onLoadingFinished: () -> Unit = {}) {
+fun ImageView.load(
+    url: String,
+    loadOnlyFromCache: Boolean = false,
+    onLoadingFinished: () -> Unit = {}
+) {
 
 
     val listener = object : RequestListener<Drawable> {
@@ -48,4 +52,4 @@ fun ImageView.load(url: String, loadOnlyFromCache: Boolean = false, onLoadingFin
         .into(this)
 }
 
-fun RecyclerView.ViewHolder.getContext() : Context = itemView.context
+fun RecyclerView.ViewHolder.getContext(): Context = itemView.context

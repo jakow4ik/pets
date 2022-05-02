@@ -4,21 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import by.dro.pets.databinding.PetViewHolderBinding
 import by.dro.pets.domain.entities.Dog
 
 class PetsAdapter(private val selectedListener: PetSelectedListener?) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    ListAdapter<Dog, PetViewHolder>(DIFF_CALLBACK) {
 
-    var petsList: List<Dog>? = null
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    override fun onBindViewHolder(holder: PetViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PetViewHolder {
         return PetViewHolder(
             PetViewHolderBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -29,14 +27,17 @@ class PetsAdapter(private val selectedListener: PetSelectedListener?) :
         )
     }
 
-    override fun getItemCount(): Int = petsList?.size ?: 0
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is PetViewHolder) holder.bind(petsList?.get(position))
-    }
-
-
     interface PetSelectedListener {
         fun onPetSelected(pet: Dog?, imageView: ImageView, textView: TextView)
+    }
+}
+
+private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Dog>() {
+    override fun areItemsTheSame(oldItem: Dog, newItem: Dog): Boolean {
+        return oldItem.uid == newItem.uid
+    }
+
+    override fun areContentsTheSame(oldItem: Dog, newItem: Dog): Boolean {
+        return oldItem == newItem
     }
 }
