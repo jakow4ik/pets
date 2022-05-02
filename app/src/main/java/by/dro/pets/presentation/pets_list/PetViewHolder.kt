@@ -12,7 +12,6 @@ import by.dro.pets.util.load
 class PetViewHolder(private val binding: PetViewHolderBinding, selectedListener: PetsAdapter.PetSelectedListener?) :
     RecyclerView.ViewHolder(binding.root) {
 
-
     init {
         itemView.setOnClickListener {
             selectedListener?.onPetSelected(pet, binding.petsViewHolderImageIV, binding.petsViewHolderNameTV)
@@ -29,12 +28,11 @@ class PetViewHolder(private val binding: PetViewHolderBinding, selectedListener:
         binding.petsViewHolderRatingTV.text = pet.popularityRating.toString()
         binding.petsViewHolderImageIV.load(pet.titleImg)
 
-
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
             binding.petsViewHolderImageIV.transitionName =
-                String.format(getContext().getString(R.string.transition_image, pet.uid))
+                getContext().getString(R.string.transition_image, pet.uid)
             binding.petsViewHolderNameTV.transitionName =
-                String.format(getContext().getString(R.string.transition_name, pet.uid))
+                getContext().getString(R.string.transition_name, pet.uid)
         }
     }
 }

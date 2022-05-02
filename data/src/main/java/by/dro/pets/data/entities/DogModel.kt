@@ -1,11 +1,13 @@
 package by.dro.pets.data.entities
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.firebase.database.IgnoreExtraProperties
 import kotlinx.parcelize.Parcelize
 
 @IgnoreExtraProperties
 @Parcelize
+@Keep
 data class DogModel(
     var uid: String? = "",
     var name: String? = "",
@@ -31,12 +33,4 @@ data class DogModel(
     var care: String? = "",
     var lifespan: String? = "",
     var problems: String? = ""
-) : Parcelable
-
-
-@IgnoreExtraProperties
-@Parcelize
-data class ListPets(
-    var name: String? = "",
-    var map: MutableMap<String, DogModel> = HashMap()
 ) : Parcelable
