@@ -11,8 +11,8 @@ class DogRepositoryImpl(
     private val dogDataStore: DogDataStore,
 ) : DogRepository {
     override fun getDogs(): Flow<List<Dog>> {
-        return dogDataStore.getDogs().map { listPets ->
-            listPets.map.values.map {
+        return dogDataStore.getDogs().map { dogsMap ->
+            dogsMap.values.map {
                 it.toDomainModel()
             }
         }

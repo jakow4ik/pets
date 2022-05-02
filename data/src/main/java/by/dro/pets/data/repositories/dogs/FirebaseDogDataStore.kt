@@ -1,38 +1,33 @@
 package by.dro.pets.data.repositories.dogs
 
-import android.util.Log
-import by.dro.pets.data.ListPets
+import by.dro.pets.data.entities.DogModel
 import com.google.firebase.database.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
-class FirebaseDogDataStore: DogDataStore {
+class FirebaseDogDataStore : DogDataStore {
 
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().reference
-        .child("pets").child("dogs").child("ru")
-
-    private val _dogs = MutableSharedFlow<ListPets>(replay = 1)
+    private val _dogs = MutableSharedFlow<Map<String, DogModel>>(replay = 1)
 
     init {
-
-        database.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                val pets = p0.getValue(ListPets::class.java) ?: return
-//                liveData.value = pets?.map
-                Log.d("kkk", "load data")
-                _dogs.tryEmit(pets)
-            }
-
-        })
-
+        FirebaseDatabase.getInstance().reference
+            .child("pets").child("dogs").child("ru").child("map")
+            .addValueEventListener(DogsEventListener(_dogs))
     }
 
-    override fun getDogs(): Flow<ListPets> {
-        return _dogs.asSharedFlow()
+    override fun getDogs(): Flow<Map<String, DogModel>> = _dogs.asSharedFlow()
+
+    private class DogsEventListener(
+        private val sharedFlow: MutableSharedFlow<Map<String, DogModel>>
+    ) : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val pets = snapshot.getValue(PetsMapGenericTypeIndicator()) ?: emptyMap()
+            sharedFlow.tryEmit(pets)
+        }
+
+        override fun onCancelled(error: DatabaseError) = Unit
     }
+
+    private class PetsMapGenericTypeIndicator : GenericTypeIndicator<Map<String, DogModel>>()
 }

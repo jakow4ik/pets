@@ -1,4 +1,4 @@
-package by.dro.pets.data
+package by.dro.pets.data.entities
 
 import android.os.Parcelable
 import com.google.firebase.database.IgnoreExtraProperties

@@ -1,6 +1,6 @@
 package by.dro.pets.data.mappers
 
-import by.dro.pets.data.DogModel
+import by.dro.pets.data.entities.DogModel
 import by.dro.pets.domain.entities.Dog
 
 fun DogModel.toDomainModel(): Dog {
