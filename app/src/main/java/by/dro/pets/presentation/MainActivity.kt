@@ -3,6 +3,7 @@ package by.dro.pets.presentation
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
 import by.dro.pets.R
 import by.dro.pets.presentation.pets_list.PetsListFragment
@@ -13,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         FirebaseDynamicLinks.getInstance()
             .getDynamicLink(intent)
