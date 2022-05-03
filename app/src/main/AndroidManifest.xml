@@ -26,7 +26,7 @@
 
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-            <nav-graph android:value="@navigation/maingraph" />
+            <nav-graph android:value="@navigation/main_graph" />
         </activity>
         <meta-data
             android:name="preloaded_fonts"

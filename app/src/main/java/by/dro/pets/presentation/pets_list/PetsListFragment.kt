@@ -44,8 +44,8 @@ class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPetsListB
                 binding.searchBar.disableSearch()
 
             val extras = FragmentNavigatorExtras(
-                imageView to String.format(getString(R.string.transition_image, pet?.uid)),
-                textView to String.format(getString(R.string.transition_name, pet?.uid))
+                imageView to getString(R.string.transition_image, pet?.uid),
+                textView to getString(R.string.transition_name, pet?.uid)
             )
 
             val arguments = Bundle()

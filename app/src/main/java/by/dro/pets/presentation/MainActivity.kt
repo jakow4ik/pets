@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 val arguments = Bundle()
                 arguments.putString(PetsListFragment.ARG_UID, link?.link?.getQueryParameter("uid"))
                 if (link?.link != null)
-                    findNavController(R.id.fragment).navigate(
+                    findNavController(R.id.main_fragment_container).navigate(
                         R.id.action_petsListFragment_to_detailFragment,
                         arguments
                     )
