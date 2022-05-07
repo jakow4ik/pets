@@ -1,0 +1,58 @@
+name: Dev pipeline
+
+on:
+  push:
+    branches-ignore: 
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with: {java-version: 11}
+        
+      - name: Bump version code
+        uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: app/build.gradle
+          versionCode: ${{github.run_number}}
+        
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+        
+      - name: Create file google-services.json
+        run: cat /home/runner/work/pets/pets/app/google-services.json | base64
+        
+      - name: Putting data google-services.json
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/pets/pets/app/google-services.json
+        
+      - name: Build release AAB
+        run: ./gradlew bundleRelease
+        
+      - name: Uploading build to IAS
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{secrets.GOOGLE_SERVICE_ACCOUNT_JSON}}
+          packageName: by.dro.pets
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          track: internalsharing
+          
+      - name: Send telegram message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            Build version: ${{github.run_number}}
+            
+            ${{ env.INTERNAL_SHARING_DOWNLOAD_URL }}
