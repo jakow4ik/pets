@@ -23,16 +23,14 @@ jobs:
         
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
-        
-      - name: Create file google-services.json
-        run: cat /home/runner/work/pets/pets/app/google-services.json | base64
-        
-      - name: Putting data google-services.json
+
+      - name: Create google-services.json
         env:
-          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        run: echo $DATA > /home/runner/work/pets/pets/app/google-services.json
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo $GOOGLE_SERVICES_JSON | base64 -di > /home/runner/work/pets/pets/app/google-services.json
         
-      - name: Build APK and AAB
+      - name: Build release AAB
         run: |
          ./gradlew bundleRelease
         
@@ -82,9 +80,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           #document: apk/release/app-release-unsigned.apk
           message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
-            
             Repository: ${{ github.repository }}
             Build version: ${{github.run_number}}
             
