@@ -24,7 +24,8 @@ data class Dog(
     val character: String,
     val care: String,
     val lifespan: String,
-    val problems: String
+    val problems: String,
+    val isBookmark: Boolean,
 ) {
     companion object {
         val EMPTY = Dog(
@@ -52,6 +53,7 @@ data class Dog(
             care = "",
             lifespan = "",
             problems = "",
+            isBookmark = false,
         )
     }
 }

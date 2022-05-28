@@ -29,6 +29,7 @@ class PetsAdapter(private val selectedListener: PetSelectedListener?) :
 
     interface PetSelectedListener {
         fun onPetSelected(pet: Dog?, imageView: ImageView, textView: TextView)
+        fun onBookmarkClicked(pet: Dog?)
     }
 }
 

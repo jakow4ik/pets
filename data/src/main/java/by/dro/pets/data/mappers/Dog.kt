@@ -3,7 +3,7 @@ package by.dro.pets.data.mappers
 import by.dro.pets.data.entities.DogModel
 import by.dro.pets.domain.entities.Dog
 
-fun DogModel.toDomainModel(): Dog {
+fun DogModel.toDomainModel(isBookmark: Boolean): Dog {
     return Dog(
         uid = uid ?: "",
         name = name ?: "",
@@ -29,5 +29,6 @@ fun DogModel.toDomainModel(): Dog {
         care = care ?: "",
         lifespan = lifespan ?: "",
         problems = problems ?: "",
+        isBookmark = isBookmark,
     )
 }

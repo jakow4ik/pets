@@ -1,5 +1,6 @@
 package by.dro.pets.presentation.pets_list
 
+import android.graphics.Color
 import android.os.Build
 import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.Config
@@ -16,6 +17,9 @@ class PetViewHolder(private val binding: PetViewHolderBinding, selectedListener:
         itemView.setOnClickListener {
             selectedListener?.onPetSelected(pet, binding.petsViewHolderImageIV, binding.petsViewHolderNameTV)
         }
+        binding.petsViewHolderBookmark.setOnClickListener {
+            selectedListener?.onBookmarkClicked(pet)
+        }
     }
 
     private var pet: Dog? = null
@@ -27,6 +31,10 @@ class PetViewHolder(private val binding: PetViewHolderBinding, selectedListener:
         binding.petsViewHolderTypeTV.text = pet.country
         binding.petsViewHolderRatingTV.text = pet.popularityRating.toString()
         binding.petsViewHolderImageIV.load(pet.titleImg)
+
+        binding.petsViewHolderBookmark.setBackgroundColor(
+            if (pet.isBookmark) Color.BLACK else Color.WHITE
+        )
 
         if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
             binding.petsViewHolderImageIV.transitionName =

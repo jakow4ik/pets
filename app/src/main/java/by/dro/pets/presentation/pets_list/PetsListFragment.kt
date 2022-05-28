@@ -66,6 +66,10 @@ class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPetsListB
             }
 
         }
+
+        override fun onBookmarkClicked(pet: Dog?) {
+            viewModel.onBookmarkClicked(pet!!)
+        }
     })
 
     override fun initView(vb: FragmentPetsListBinding) {
