@@ -32,5 +32,8 @@
 
     <string name="share_hint">Поделиться</string>
 
+    <string name="tab_search">Поиск</string>
+    <string name="tab_bookmark">Закладки</string>
+
 
 </resources>
