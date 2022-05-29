@@ -27,10 +27,8 @@ class PetsDetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBin
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
-            sharedElementEnterTransition =
-                TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        }
+        sharedElementEnterTransition =
+            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
     override fun initView(vb: FragmentDetailBinding) {
@@ -70,12 +68,10 @@ class PetsDetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBin
 
     private fun updateUi(pet: Dog) {
         Log.d("kkk", "updateUi - uid = ${pet.uid} \n sdk = ${Build.VERSION.SDK_INT}")
-        if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
-            binding.petsImage.transitionName =
-                String.format(getString(R.string.transition_image, pet.uid))
-            binding.petsName.transitionName =
-                String.format(getString(R.string.transition_name, pet.uid))
-        }
+        binding.petsImage.transitionName =
+            String.format(getString(R.string.transition_image, pet.uid))
+        binding.petsName.transitionName =
+            String.format(getString(R.string.transition_name, pet.uid))
         postponeEnterTransition()
         binding.petsImage.load(pet.titleImg) {
             startPostponedEnterTransition()

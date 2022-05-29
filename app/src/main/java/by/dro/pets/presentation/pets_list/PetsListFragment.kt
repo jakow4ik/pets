@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -47,24 +48,12 @@ class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPetsListB
                 imageView to getString(R.string.transition_image, pet?.uid),
                 textView to getString(R.string.transition_name, pet?.uid)
             )
-
-            val arguments = Bundle()
-            arguments.putString(ARG_UID, pet?.uid)
-
-            if (Build.VERSION.SDK_INT >= Config.MIN_TRANSITION_SDK) {
-                findNavController().navigate(
-                    R.id.action_petsListFragment_to_detailFragment,
-                    arguments,
-                    null,
-                    extras
-                )
-            } else {
-                findNavController().navigate(
-                    R.id.action_petsListFragment_to_detailFragment,
-                    arguments
-                )
-            }
-
+            findNavController().navigate(
+                R.id.action_petsListFragment_to_detailFragment,
+                bundleOf(ARG_UID to pet?.uid),
+                null,
+                extras
+            )
         }
 
         override fun onBookmarkClicked(pet: Dog?) {

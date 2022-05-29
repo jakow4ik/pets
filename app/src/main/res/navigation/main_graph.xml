@@ -21,10 +21,20 @@
         android:id="@+id/detailFragment"
         android:name="by.dro.pets.presentation.pets_details.PetsDetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        tools:layout="@layout/fragment_detail">
         <deepLink
             android:id="@+id/deepLink"
-            app:uri="https://pets.dro.by/app"
-            android:autoVerify="true" />
+            android:autoVerify="true"
+            app:uri="https://pets.dro.by/app" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookmarksFragment"
+        android:name="by.dro.pets.presentation.bookmarks.BookmarksFragment"
+        android:label="BookmarksFragment"
+        tools:layout="@layout/fragment_bookmarks" >
+        <action
+            android:id="@+id/action_bookmarksFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:popUpTo="@id/bookmarksFragment" />
     </fragment>
 </navigation>
