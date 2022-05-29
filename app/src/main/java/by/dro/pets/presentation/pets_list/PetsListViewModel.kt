@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
+
 @HiltViewModel
 class PetsListViewModel @Inject constructor(
     getDogsUseCase: GetDogsUseCase,
@@ -26,7 +27,7 @@ class PetsListViewModel @Inject constructor(
 
     fun onBookmarkClicked(dog: Dog) {
         viewModelScope.launch {
-            if (dog.isBookmark) {
+            if (dog.isBookmarked) {
                 removeDogBookmark.execute(dog)
             } else {
                 addDogBookmark.execute(dog)

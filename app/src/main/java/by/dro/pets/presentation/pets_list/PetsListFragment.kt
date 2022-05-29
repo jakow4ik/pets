@@ -37,8 +37,8 @@ class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPetsListB
 
     //    private lateinit var database: DatabaseReference
 
-    private val adapter = PetsAdapter(object : PetsAdapter.PetSelectedListener {
-        override fun onPetSelected(pet: Dog?, imageView: ImageView, textView: TextView) {
+    private val adapter = PetsAdapter(object : PetsAdapter.PetClickListener {
+        override fun onPetClicked(pet: Dog?, imageView: ImageView, textView: TextView) {
 
             if (binding.searchBar.isSearchEnabled)
                 binding.searchBar.disableSearch()

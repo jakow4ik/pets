@@ -21,7 +21,7 @@ class DogRepositoryImpl(
 
     override fun getBookmarks(): Flow<List<Dog>> {
         return getDogs().map { list ->
-            list.filter { it.isBookmark }
+            list.filter { it.isBookmarked }
         }
     }
 
