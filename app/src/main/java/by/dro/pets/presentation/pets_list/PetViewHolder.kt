@@ -58,8 +58,8 @@ class PetViewHolder(
     }
 
     private fun bindBookmark(isBookmarked: Boolean) {
-        binding.petsViewHolderBookmark.setBackgroundColor(
-            if (isBookmarked) Color.BLACK else Color.WHITE
+        binding.petsViewHolderBookmark.setImageResource(
+            if (isBookmarked) R.drawable.ic_bookmark_enable else R.drawable.ic_bookmark_disable
         )
     }
 }
