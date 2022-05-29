@@ -1,7 +1,6 @@
 package by.dro.pets.data.repositories.dogs
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -20,32 +19,31 @@ class BookmarkDataStoreImpl(private val context: Context, dataStoreName: String)
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(dataStoreName)
 
     override suspend fun add(id: String) {
-        context.dataStore.edit { pref ->
-            val set: MutableSet<String> = (pref[PreferencesKeys.BOOKMARKS].orEmpty()).toMutableSet()
-            set.add(id)
-            pref[PreferencesKeys.BOOKMARKS] = set
-        }
+        context.dataStore.editBookmarksSet { it.add(id) }
     }
 
     override suspend fun remove(id: String) {
-        context.dataStore.edit { pref ->
-            val set: MutableSet<String> = (pref[PreferencesKeys.BOOKMARKS].orEmpty()).toMutableSet()
-            set.remove(id)
-            pref[PreferencesKeys.BOOKMARKS] = set
-        }
+        context.dataStore.editBookmarksSet { it.remove(id) }
     }
-
 
     override fun getAll(): Flow<Set<String>> {
         return context.dataStore.data.catch { exception ->
             if (exception is IOException) {
-                Log.d("DataStoreRepository", exception.message.toString())
                 emit(emptyPreferences())
             } else {
                 throw exception
             }
         }.map { preference ->
             preference[PreferencesKeys.BOOKMARKS].orEmpty()
+        }
+    }
+
+    private suspend fun DataStore<Preferences>.editBookmarksSet(block: (MutableSet<String>) -> Unit) {
+        edit { preference ->
+            val set: MutableSet<String> =
+                (preference[PreferencesKeys.BOOKMARKS].orEmpty()).toMutableSet()
+            block.invoke(set)
+            preference[PreferencesKeys.BOOKMARKS] = set
         }
     }
 

@@ -14,6 +14,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+
+private const val DOG_BOOKMARK_DATA_STORE = "DOG_BOOKMARK_DATA_STORE"
+
 @Module
 @InstallIn(SingletonComponent::class)
 class DataModule {
@@ -25,7 +28,7 @@ class DataModule {
     ): BookmarkDataStore {
         return BookmarkDataStoreImpl(
             context = context,
-            dataStoreName = "DOG_BOOKMARK_DATA_STORE",
+            dataStoreName = DOG_BOOKMARK_DATA_STORE,
         )
     }
 
