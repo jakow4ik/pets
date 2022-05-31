@@ -8,17 +8,13 @@ import android.util.Log
 import android.view.View
 import android.widget.RatingBar
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import by.dro.pets.Config
 import by.dro.pets.R
 import by.dro.pets.databinding.FragmentDetailBinding
 import by.dro.pets.domain.entities.Dog
 import by.dro.pets.presentation.base.BaseFragment
+import by.dro.pets.util.collectOnStart
 import by.dro.pets.util.load
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PetsDetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
@@ -31,7 +27,7 @@ class PetsDetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBin
             TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
-    override fun initView(vb: FragmentDetailBinding) {
+    override fun initView() {
 //        vb.toolbar.inflateMenu(R.menu.pet_detail)
 //        vb.toolbar.setOnMenuItemClickListener {
 //            when (it.itemId) {
@@ -40,15 +36,9 @@ class PetsDetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBin
 //            }
 //            true
 //        }
-        vb.toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_24px)
-        vb.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.dog.collect {
-                    updateUi(it)
-                }
-            }
-        }
+        binding.toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_24px)
+        binding.toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
+        collectOnStart(viewModel.dog) { updateUi(it) }
     }
 
     private fun share(pet: Dog?) {
