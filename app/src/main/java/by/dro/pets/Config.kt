@@ -1,7 +1,6 @@
 package by.dro.pets
 
 object Config {
-    const val MIN_TRANSITION_SDK = 21
 
     const val STORAGE_PATH_DOGS = "gs://pets-i.appspot.com/dogs"
 

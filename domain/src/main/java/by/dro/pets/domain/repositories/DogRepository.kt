@@ -9,7 +9,7 @@ interface DogRepository {
 
     fun getBookmarks(): Flow<List<Dog>>
 
-    fun bookmark(dog: Dog)
+    suspend fun addBookmark(dog: Dog)
 
-    fun unbookmark(dog: Dog)
+    suspend fun removeBookmark(dog: Dog)
 }

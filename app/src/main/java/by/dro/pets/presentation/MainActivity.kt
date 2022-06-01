@@ -5,8 +5,11 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import by.dro.pets.R
 import by.dro.pets.presentation.pets_list.PetsListFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,6 +19,19 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
+        if (savedInstanceState == null) {
+            initBottomNavigation()
+        }
+    }
+
+    private fun initBottomNavigation() {
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment
+        bottomNavigationView.setupWithNavController(navHostFragment.navController)
+    }
+
+    private fun initDynamicLinks() {
         FirebaseDynamicLinks.getInstance()
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { link ->
