@@ -57,8 +57,9 @@ class PetsDetailFragment : BaseFragment<FragmentDetailBinding>(FragmentDetailBin
 
     private fun updateUi(pet: Dog) {
         binding.apply {
-            petsImage.transitionName = String.format(getString(R.string.transition_image, pet.uid))
-            petsName.transitionName = String.format(getString(R.string.transition_name, pet.uid))
+            petsImage.transitionName = getString(R.string.transition_image, pet.uid)
+            petsName.transitionName = getString(R.string.transition_name, pet.uid)
+            petsDetailBookmark.transitionName = getString(R.string.transition_bookmark, pet.uid)
             postponeEnterTransition()
             petsImage.load(pet.titleImg) { startPostponedEnterTransition() }
             toolbar.title = pet.name

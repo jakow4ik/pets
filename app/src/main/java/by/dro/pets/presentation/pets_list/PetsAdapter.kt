@@ -13,7 +13,7 @@ import by.dro.pets.domain.entities.Dog
 import by.dro.pets.presentation.pets_list.PetsAdapter.Companion.ARG_BOOKMARK
 
 
-class PetsAdapter(private val selectedListener: PetClickListener?) :
+class PetsAdapter(private val selectedListener: PetClickListener) :
     ListAdapter<Dog, PetViewHolder>(DIFF_CALLBACK) {
 
     override fun onBindViewHolder(holder: PetViewHolder, position: Int) {
@@ -44,8 +44,8 @@ class PetsAdapter(private val selectedListener: PetClickListener?) :
     }
 
     interface PetClickListener {
-        fun onPetClicked(pet: Dog?, imageView: ImageView, textView: TextView)
-        fun onBookmarkClicked(pet: Dog?)
+        fun onPetClicked(pet: Dog, imageView: ImageView, textView: TextView, bookmark: ImageView)
+        fun onBookmarkClicked(pet: Dog)
     }
 
     companion object {

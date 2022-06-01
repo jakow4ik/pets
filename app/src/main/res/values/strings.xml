@@ -29,6 +29,7 @@
 
     <string name="transition_image">title_pet_image_%s</string>
     <string name="transition_name">title_pet_name_%s</string>
+    <string name="transition_bookmark">title_pet_bookmark_%s</string>
 
     <string name="share_hint">Поделиться</string>
 

@@ -32,25 +32,27 @@ open class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPets
     }
 
     private val petsAdapter = PetsAdapter(object : PetsAdapter.PetClickListener {
-        override fun onPetClicked(pet: Dog?, imageView: ImageView, textView: TextView) {
+
+        override fun onPetClicked(pet: Dog, imageView: ImageView, textView: TextView, bookmark: ImageView) {
 
             if (binding.searchBar.isSearchEnabled)
                 binding.searchBar.disableSearch()
 
             val extras = FragmentNavigatorExtras(
-                imageView to getString(R.string.transition_image, pet?.uid),
-                textView to getString(R.string.transition_name, pet?.uid)
+                imageView to getString(R.string.transition_image, pet.uid),
+                textView to getString(R.string.transition_name, pet.uid),
+                bookmark to getString(R.string.transition_bookmark, pet.uid),
             )
             findNavController().navigate(
                 detailFragmentNavigation,
-                bundleOf(ARG_UID to pet?.uid),
+                bundleOf(ARG_UID to pet.uid),
                 null,
                 extras
             )
         }
 
-        override fun onBookmarkClicked(pet: Dog?) {
-            viewModel.onBookmarkClicked(pet ?: return)
+        override fun onBookmarkClicked(pet: Dog) {
+            viewModel.onBookmarkClicked(pet)
         }
     })
 
