@@ -7,8 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.R
+import by.dro.pets.presentation.MainActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -68,4 +71,9 @@ fun <T> Fragment.collectOnStart(flow: Flow<T>, collector: FlowCollector<T>) {
             flow.collect(collector)
         }
     }
+}
+
+fun MainActivity.getNavController(): NavController {
+    return (supportFragmentManager
+        .findFragmentById(R.id.main_fragment_container) as NavHostFragment).navController
 }

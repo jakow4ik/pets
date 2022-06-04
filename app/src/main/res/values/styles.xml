@@ -2,7 +2,7 @@
 <resources>
 
     <style name="Widget.App.SearchBar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:padding">8dp</item>
+        <item name="android:padding">5dp</item>
         <item name="mt_searchBarColor">@color/primarily_background</item>
         <item name="mt_textColor">@color/primarily_text</item>
         <item name="mt_placeholderColor">@color/primarily_text</item>

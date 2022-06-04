@@ -1,17 +1,20 @@
 package by.dro.pets.presentation
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import by.dro.pets.R
 import by.dro.pets.databinding.ActivityMainBinding
 import by.dro.pets.presentation.pets_list.PetsListFragment
+import by.dro.pets.util.getNavController
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,9 +33,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBottomNavigation() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.main_fragment_container) as NavHostFragment
-        binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
+        getNavController().also { navController ->
+            binding.bottomNavigation.setupWithNavController(navController)
+            binding.bottomNavigation.setOnItemSelectedListener { item ->
+                NavigationUI.onNavDestinationSelected(item, navController)
+                navController.popBackStack(item.itemId, inclusive = false)
+                true
+            }
+        }
     }
 
     private fun setupSystemUi() {
@@ -41,9 +49,19 @@ class MainActivity : AppCompatActivity() {
             val insetsControllerCompat = WindowInsetsControllerCompat(this, decorView)
             insetsControllerCompat.isAppearanceLightNavigationBars = true
             insetsControllerCompat.isAppearanceLightStatusBars = true
-            navigationBarColor = getColor(R.color.primarily_background)
-            statusBarColor = getColor(R.color.primarily_background)
+            navigationBarColor = ContextCompat.getColor(context, getSystemNavigationColor())
+            statusBarColor = ContextCompat.getColor(context, getSystemStatusBarColor())
         }
+    }
+
+    private fun getSystemNavigationColor(): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) R.color.primarily_background
+        else android.R.color.black
+    }
+
+    private fun getSystemStatusBarColor(): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) R.color.primarily_background
+        else android.R.color.black
     }
 
     private fun initDynamicLinks() {
