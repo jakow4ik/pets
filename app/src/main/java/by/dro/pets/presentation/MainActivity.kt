@@ -1,6 +1,5 @@
 package by.dro.pets.presentation
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -42,8 +41,8 @@ class MainActivity : AppCompatActivity() {
             val insetsControllerCompat = WindowInsetsControllerCompat(this, decorView)
             insetsControllerCompat.isAppearanceLightNavigationBars = true
             insetsControllerCompat.isAppearanceLightStatusBars = true
-            navigationBarColor = Color.WHITE
-            statusBarColor = Color.WHITE
+            navigationBarColor = getColor(R.color.primarily_background)
+            statusBarColor = getColor(R.color.primarily_background)
         }
     }
 

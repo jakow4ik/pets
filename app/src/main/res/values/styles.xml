@@ -2,8 +2,27 @@
 <resources>
 
     <style name="Widget.App.SearchBar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="android:colorPrimary">#FFFFFF</item>
         <item name="android:padding">8dp</item>
+        <item name="mt_searchBarColor">@color/primarily_background</item>
+        <item name="mt_textColor">@color/primarily_text</item>
+        <item name="mt_placeholderColor">@color/primarily_text</item>
+        <item name="mt_searchIconTint">@color/primarily_text</item>
+        <item name="mt_navIconTint">@color/primarily_text</item>
+        <item name="mt_backIconTint">@color/primarily_text</item>
+        <item name="mt_menuIconTint">@color/primarily_text</item>
+        <item name="mt_clearIconTint">@color/primarily_text</item>
+        <item name="mt_hintColor">@color/primarily_light_text</item>
+    </style>
+
+    <style name="Widget.App.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="android:background">@color/primarily_background</item>
+        <item name="itemTextColor">@color/bottom_navigation_icon</item>
+        <item name="itemIconTint">@color/bottom_navigation_icon</item>
+        <item name="itemRippleColor">@color/accent_light_green</item>
+    </style>
+
+    <style name="Widget.App.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Primary">
+        <item name="android:backgroundTint">@color/primarily_background</item>
     </style>
 
 </resources>
