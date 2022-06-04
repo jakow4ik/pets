@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_background"
+    android:background="@color/primarily_background"
     tools:context=".presentation.pets_list.PetsListFragment"
     >
 
@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        app:liftOnScroll="true"
         app:layout_scrollFlags="scroll|enterAlways"
         >
 

@@ -36,5 +36,7 @@
     <string name="tab_search">Поиск</string>
     <string name="tab_bookmark">Закладки</string>
 
+    <string name="version_n">Версия: %s</string>
+
 
 </resources>
