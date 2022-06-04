@@ -1,19 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="Theme.App.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:windowContentTransitions">true</item>
+    <style name="Widget.App.SearchBar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:colorPrimary">#FFFFFF</item>
+        <item name="android:padding">8dp</item>
     </style>
 
-    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
-<!--        <item name="windowSplashScreenAnimationDuration">900</item>-->
-        <item name="postSplashScreenTheme">@style/Theme.App.Base</item>
-    </style>
 </resources>

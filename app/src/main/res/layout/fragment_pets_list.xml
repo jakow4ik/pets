@@ -9,31 +9,31 @@
     tools:context=".presentation.pets_list.PetsListFragment"
     >
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/pet_view_holder"
         />
-
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:backgroundTint="@color/white"
         android:gravity="center"
         app:layout_scrollFlags="scroll|enterAlways"
         >
 
         <com.mancj.materialsearchbar.MaterialSearchBar
             android:id="@+id/searchBar"
+            style="@style/Widget.App.SearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="7dp"
             app:layout_scrollFlags="scroll|enterAlways"
             />
     </com.google.android.material.appbar.AppBarLayout>
