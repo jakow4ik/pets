@@ -22,8 +22,9 @@ jobs:
         id: param
         env:
           BUILD_NUMBER: ${{ github.run_number }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
-          echo "BUILD_VERSION=${{ $BUILD_NUMBER + $BUILD_VERSION_OFFSET }}" >> $GITHUB_ENV
+          echo "BUILD_VERSION=${{ env.BUILD_NUMBER + env.BUILD_VERSION_OFFSET }}" >> $GITHUB_ENV
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.1
