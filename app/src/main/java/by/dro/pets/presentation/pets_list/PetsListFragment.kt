@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
@@ -15,6 +16,7 @@ import by.dro.pets.databinding.FragmentPetsListBinding
 import by.dro.pets.domain.entities.Dog
 import by.dro.pets.presentation.about.AboutFragment
 import by.dro.pets.presentation.base.BaseFragment
+import by.dro.pets.util.EMPTY
 import by.dro.pets.util.collectOnStart
 import com.mancj.materialsearchbar.MaterialSearchBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -59,8 +61,10 @@ open class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPets
     override fun initView() {
         initSearchBar()
         initRecycler()
+        initPlaceholder()
         collectOnStart(viewModel.dogsList) {
             petsAdapter.submitList(it)
+            updatePlaceholder(it.isEmpty())
         }
         postponeEnterTransition()
     }
@@ -69,6 +73,22 @@ open class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPets
         super.onResume()
         if (binding.searchBar.text.isNotEmpty()) {
             binding.searchBar.performClick()
+        }
+    }
+
+    protected open fun initPlaceholder() {
+        binding.petsPlaceholder.apply {
+            petsListEmptyImage.setImageResource(R.drawable.img_pets_list_empty)
+            petsListEmptyTitle.setText(R.string.pets_list_placeholder_title)
+            petsListEmptyText.text = String.EMPTY
+        }
+    }
+
+    private fun updatePlaceholder(isVisible: Boolean) {
+        binding.petsPlaceholder.apply {
+            petsListEmptyImage.isVisible = isVisible
+            petsListEmptyTitle.isVisible = isVisible
+            petsListEmptyText.isVisible = isVisible
         }
     }
 

@@ -36,5 +36,11 @@
     <string name="tab_search">Поиск</string>
     <string name="tab_bookmark">Закладки</string>
 
+    <string name="version_n">Версия: %s</string>
+
+    <string name="pets_list_placeholder_title">Пожалуйста, подождите</string>
+    <string name="bookmarks_placeholder_title">Ууупс!</string>
+    <string name="bookmarks_placeholder_text">Похоже, что вы еще ничего не добавили в закладки. Как только вы это сделаете — они будут храниться здесь</string>
+
 
 </resources>
