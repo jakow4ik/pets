@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        app:liftOnScroll="true"
         app:layout_scrollFlags="scroll|enterAlways"
+        app:liftOnScroll="true"
         >
 
         <com.mancj.materialsearchbar.MaterialSearchBar
@@ -36,4 +36,13 @@
             app:layout_scrollFlags="scroll|enterAlways"
             />
     </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        android:id="@+id/petsPlaceholder"
+        layout="@layout/pets_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

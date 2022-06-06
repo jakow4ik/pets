@@ -11,4 +11,12 @@ class BookmarksFragment : PetsListFragment() {
     override val viewModel: BookmarksViewModel by viewModels()
 
     override val detailFragmentNavigation: Int = R.id.action_bookmarksFragment_to_detailFragment
+
+    override fun initPlaceholder() {
+        binding.petsPlaceholder.apply {
+            petsListEmptyImage.setImageResource(R.drawable.img_bookmark_empty)
+            petsListEmptyTitle.setText(R.string.bookmarks_placeholder_title)
+            petsListEmptyText.setText(R.string.bookmarks_placeholder_text)
+        }
+    }
 }
