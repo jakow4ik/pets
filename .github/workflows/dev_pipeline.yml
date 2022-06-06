@@ -22,8 +22,10 @@ jobs:
         id: param
         env:
           BUILD_NUMBER: ${{ github.run_number }}
-          run: |
-            echo ::set-env name=BUILD_VERSION::$(($BUILD_NUMBER+$BUILD_VERSION_OFFSET))
+        run: |
+          $version = "3.2."+(4000+$($Env:GITHUB_RUN_NUMBER))+".0"
+          echo $version
+          echo "VERSION_NUMBER=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.1
