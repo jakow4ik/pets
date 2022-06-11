@@ -6,7 +6,7 @@ on:
       - develop
 
 env:
-  BUILD_VERSION_OFFSET: 10
+  BUILD_OFFSET: 10
 
 jobs:
   build:
@@ -18,31 +18,14 @@ jobs:
       - uses: actions/setup-java@v1
         with: { java-version: 11 }
         
-      - name: Set build version
-        id: param
-#        run: |
-#          echo "BUILD_NUMBER=yellow" >> $GITHUB_ENV
+      - name: Calculate build numder
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
           NUM: ${{ github.run_number }}
         run: |
-          echo ::set-env name=BUILD_NUMBER::$(($NUM+200))
-          
-      - name: Use the value
-        id: step_two
-        run: |
-          echo "${{ env.BUILD_NUMBER }}" # This will output 'yellow'
+          echo ::set-env name=BUILD_NUMBER::$(($NUM+$BUILD_OFFSET))
 
-#      - name: Calculate build version
-#        id: param
-#        env:
-#          BUILD_NUMBER: ${{ github.run_number }}
-#        run: |
-#          $version = "3.2."+(4000+$($Env:GITHUB_RUN_NUMBER))+".0"
-#          echo $version
-#          echo "VERSION_NUMBER=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-
-      - name: Bump version code
+      - name: Set version code
         uses: chkfung/android-version-actions@v1.1
         with:
           gradlePath: app/build.gradle
