@@ -23,6 +23,7 @@ jobs:
 #        run: |
 #          echo "BUILD_NUMBER=yellow" >> $GITHUB_ENV
         env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
           NUM: ${{ github.run_number }}
         run: |
           echo ::set-env name=BUILD_NUMBER::$(($NUM+200))
