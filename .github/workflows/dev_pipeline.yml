@@ -5,6 +5,9 @@ on:
     branches:
       - develop
 
+env:
+  BUILD_OFFSET: 10
+
 jobs:
   build:
 
@@ -13,14 +16,21 @@ jobs:
 
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
-        with: {java-version: 11}
-        
-      - name: Bump version code
+        with: { java-version: 11 }
+
+      - name: Calculate build numder
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+          NUM: ${{ github.run_number }}
+        run: |
+          echo ::set-env name=BUILD_NUMBER::$(($NUM+$BUILD_OFFSET))
+
+      - name: Set version code
         uses: chkfung/android-version-actions@v1.1
         with:
           gradlePath: app/build.gradle
-          versionCode: ${{github.run_number}}
-        
+          versionCode: ${{env.BUILD_NUMBER}}
+
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
@@ -29,10 +39,10 @@ jobs:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: |
           echo $GOOGLE_SERVICES_JSON | base64 -di > /home/runner/work/pets/pets/app/google-services.json
-        
+
       - name: Build release AAB
         run: ./gradlew bundleRelease
-        
+
       - name: Uploading build to IAS
         uses: r0adkll/upload-google-play@v1
         with:
@@ -40,7 +50,7 @@ jobs:
           packageName: by.dro.pets
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: internalsharing
-          
+
       - name: Send telegram message
         uses: appleboy/telegram-action@master
         with:
@@ -49,5 +59,5 @@ jobs:
           message: |
             Repository: ${{ github.repository }}
             Build version: ${{github.run_number}}
-            
+
             ${{ env.INTERNAL_SHARING_DOWNLOAD_URL }}

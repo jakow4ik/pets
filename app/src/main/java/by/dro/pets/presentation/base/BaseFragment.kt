@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import dev.chrisbanes.insetter.applyInsetter
 
 abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) : Fragment() {
 
@@ -18,7 +19,8 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
-        initView(binding)
+        applyInsets()
+        initView()
         return binding.root
     }
 
@@ -27,5 +29,13 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: Inflate<VB>) 
         _binding = null
     }
 
-    abstract fun initView(vb: VB)
+    abstract fun initView()
+
+    private fun applyInsets() {
+        binding.root.applyInsetter {
+            type(statusBars = true, displayCutout = true) {
+                padding(animated = true)
+            }
+        }
+    }
 }

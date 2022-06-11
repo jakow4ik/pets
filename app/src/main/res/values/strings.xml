@@ -29,8 +29,18 @@
 
     <string name="transition_image">title_pet_image_%s</string>
     <string name="transition_name">title_pet_name_%s</string>
+    <string name="transition_bookmark">title_pet_bookmark_%s</string>
 
     <string name="share_hint">Поделиться</string>
+
+    <string name="tab_search">Поиск</string>
+    <string name="tab_bookmark">Закладки</string>
+
+    <string name="version_n">Версия: %s</string>
+
+    <string name="pets_list_placeholder_title">Пожалуйста, подождите</string>
+    <string name="bookmarks_placeholder_title">Ууупс!</string>
+    <string name="bookmarks_placeholder_text">Похоже, что вы еще ничего не добавили в закладки. Как только вы это сделаете — они будут храниться здесь</string>
 
 
 </resources>

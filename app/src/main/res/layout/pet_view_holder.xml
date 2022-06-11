@@ -10,6 +10,7 @@
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/view_holder_card_radius"
     app:cardElevation="0dp"
+    android:animateLayoutChanges="true"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,22 +31,15 @@
             app:srcCompat="@drawable/dog_placeholder"
             />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/petsViewHolderNameTV"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/petsViewHolderBookmark"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/big_padding"
-            android:layout_marginTop="@dimen/view_holder_name_margin_top"
-            android:ellipsize="end"
-            android:fontFamily="@font/raleway_medium"
-            android:maxLines="@integer/view_holder_name_max_lines"
-            android:textColor="@color/color_text_main"
-            android:textSize="@dimen/title_text_size"
-            app:layout_constraintEnd_toStartOf="@id/petsViewHolderRatingTV"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/petsViewHolderImageIV"
-            tools:text="Корги"
+            android:paddingHorizontal="@dimen/big_padding"
+            android:adjustViewBounds="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_bookmark_enable"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -55,11 +49,10 @@
             android:layout_marginEnd="@dimen/big_padding"
             android:drawablePadding="@dimen/view_holder_rating_drawable_padding"
             android:ellipsize="end"
-            android:fontFamily="@font/raleway"
             android:gravity="bottom"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@color/color_text_main"
+            android:textColor="@color/primarily_text"
             android:textSize="@dimen/body_text_size"
             app:drawableStartCompat="@drawable/ic_star"
             app:layout_constraintBaseline_toBaselineOf="@id/petsViewHolderNameTV"
@@ -74,15 +67,32 @@
             android:layout_marginHorizontal="@dimen/big_padding"
             android:layout_marginTop="@dimen/view_holder_type_margin_top"
             android:ellipsize="end"
-            android:fontFamily="@font/raleway"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColor="@color/color_text_main"
+            android:textColor="@color/primarily_text"
             android:textSize="@dimen/body_text_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/petsViewHolderNameTV"
             tools:text="Гончая, Борзая"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/petsViewHolderNameTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/big_padding"
+            android:layout_marginTop="@dimen/view_holder_name_margin_top"
+            android:ellipsize="end"
+            android:fontFamily="@font/raleway_semibold"
+            android:maxLines="@integer/view_holder_name_max_lines"
+            android:textColor="@color/primarily_text"
+            android:textSize="@dimen/title_text_size"
+            app:layout_constraintEnd_toStartOf="@id/petsViewHolderRatingTV"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/petsViewHolderImageIV"
+            tools:text="Корги"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

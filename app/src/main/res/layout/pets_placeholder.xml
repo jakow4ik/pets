@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/petsListEmptyImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="50dp"
+        android:adjustViewBounds="true"
+        tools:srcCompat="@drawable/img_pets_list_empty"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/petsListEmptyTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway_medium"
+        android:paddingHorizontal="@dimen/big_padding"
+        android:textAlignment="center"
+        android:textColor="@color/primarily_text"
+        android:textSize="20sp"
+        tools:text="Ууупс!"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/petsListEmptyText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:paddingHorizontal="@dimen/big_padding"
+        android:textAlignment="center"
+        android:textColor="@color/primarily_text"
+        android:textSize="15sp"
+        tools:text="Похоже, что вы еще ничего не добавили в закладки. Как только вы это сделаете — они будут храниться здесь"
+        />
+
+</LinearLayout>

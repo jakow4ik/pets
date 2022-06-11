@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/petsListFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_search"
+        android:title="@string/tab_search"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/bookmarksFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_bookmark"
+        android:title="@string/tab_bookmark"
+        app:showAsAction="ifRoom|withText" />
+
+</menu>

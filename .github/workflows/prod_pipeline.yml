@@ -2,8 +2,11 @@ name: Prod pipeline
 
 on:
   push:
-    branches: 
+    branches:
       - master
+
+env:
+  BUILD_OFFSET: 12
 
 jobs:
   build:
@@ -13,14 +16,21 @@ jobs:
 
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
-        with: {java-version: 11}
-        
-      - name: Bump version code
+        with: { java-version: 11 }
+
+      - name: Calculate build numder
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+          NUM: ${{ github.run_number }}
+        run: |
+          echo ::set-env name=BUILD_NUMBER::$(($NUM+$BUILD_OFFSET))
+
+      - name: Set version code
         uses: chkfung/android-version-actions@v1.1
         with:
           gradlePath: app/build.gradle
-          versionCode: ${{github.run_number}}
-        
+          versionCode: ${{env.BUILD_NUMBER}}
+
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
@@ -29,11 +39,11 @@ jobs:
           GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: |
           echo $GOOGLE_SERVICES_JSON | base64 -di > /home/runner/work/pets/pets/app/google-services.json
-        
+
       - name: Build release AAB
         run: |
-         ./gradlew bundleRelease
-        
+          ./gradlew bundleRelease
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -41,18 +51,18 @@ jobs:
           path: |
             app/build/outputs/bundle/release/app-release.aab
             app/build/outputs/mapping/release/mapping.txt
-          
+
   upload_to_test_track:
-      name: Uploading to Internal test
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-      
+    name: Uploading to Internal test
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
           name: bundle
-          
+
       - name: Sign Release AAB
         id: sign_app
         uses: r0adkll/sign-android-release@v1
@@ -62,7 +72,7 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-        
+
       - name: Uploading to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
@@ -72,7 +82,7 @@ jobs:
           status: completed
           track: internal
           mappingFile: mapping/release/mapping.txt
-          
+
       - name: Send telegram message
         uses: appleboy/telegram-action@master
         with:
@@ -82,5 +92,5 @@ jobs:
           message: |
             Repository: ${{ github.repository }}
             Build version: ${{github.run_number}}
-            
+
             Build in Google Play Internal Test!

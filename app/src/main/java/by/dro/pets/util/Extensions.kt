@@ -3,28 +3,39 @@ package by.dro.pets.util
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import by.dro.pets.R
+import by.dro.pets.presentation.MainActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
+
+val String.Companion.EMPTY get() = ""
 
 fun ImageView.load(
     url: String,
     loadOnlyFromCache: Boolean = false,
-    onLoadingFinished: () -> Unit = {}
+    onLoadingFinished: () -> Unit = {},
 ) {
-
 
     val listener = object : RequestListener<Drawable> {
         override fun onLoadFailed(
             e: GlideException?,
             model: Any?,
             target: Target<Drawable>?,
-            isFirstResource: Boolean
+            isFirstResource: Boolean,
         ): Boolean {
             onLoadingFinished()
             return false
@@ -35,7 +46,7 @@ fun ImageView.load(
             model: Any?,
             target: Target<Drawable>?,
             dataSource: DataSource?,
-            isFirstResource: Boolean
+            isFirstResource: Boolean,
         ): Boolean {
             onLoadingFinished()
             return false
@@ -53,3 +64,16 @@ fun ImageView.load(
 }
 
 fun RecyclerView.ViewHolder.getContext(): Context = itemView.context
+
+fun <T> Fragment.collectOnStart(flow: Flow<T>, collector: FlowCollector<T>) {
+    lifecycleScope.launch {
+        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            flow.collect(collector)
+        }
+    }
+}
+
+fun MainActivity.getNavController(): NavController {
+    return (supportFragmentManager
+        .findFragmentById(R.id.main_fragment_container) as NavHostFragment).navController
+}
