@@ -6,7 +6,7 @@ on:
       - develop
 
 env:
-  BUILD_VERSION_OFFSET: 10
+  BUILD_OFFSET: 10
 
 jobs:
   build:
@@ -18,20 +18,18 @@ jobs:
       - uses: actions/setup-java@v1
         with: { java-version: 11 }
 
-      - name: Calculate build version
-        id: param
+      - name: Calculate build numder
         env:
-          BUILD_NUMBER: ${{ github.run_number }}
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+          NUM: ${{ github.run_number }}
         run: |
-          $version = "3.2."+(4000+$($Env:GITHUB_RUN_NUMBER))+".0"
-          echo $version
-          echo "VERSION_NUMBER=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+          echo ::set-env name=BUILD_NUMBER::$(($NUM+$BUILD_OFFSET))
 
-      - name: Bump version code
+      - name: Set version code
         uses: chkfung/android-version-actions@v1.1
         with:
           gradlePath: app/build.gradle
-          versionCode: ${{steps.param.BUILD_VERSION}}
+          versionCode: ${{env.BUILD_NUMBER}}
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
