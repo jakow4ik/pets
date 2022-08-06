@@ -91,6 +91,5 @@ jobs:
           #document: apk/release/app-release-unsigned.apk
           message: |
             Repository: ${{ github.repository }}
-            Build version: ${{github.run_number}}
 
             Build in Google Play Internal Test!
