@@ -13,4 +13,5 @@
     <color name="accent_yellow">#FFB930</color>
     <color name="accent_green">#4D9680</color>
     <color name="accent_light_green">#BED1C5</color>
+    <color name="accent_light_green_60">#99BED1C5</color>
 </resources>

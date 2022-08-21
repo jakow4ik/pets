@@ -13,7 +13,7 @@ class FirebaseDogDataStore : DogDataStore {
 
     init {
         FirebaseDatabase.getInstance().reference
-            .child("pets").child("dogs").child("ru").child("map")
+            .child("pets").child("dogs").child("v2")
             .addValueEventListener(DogsEventListener(_dogs))
     }
 

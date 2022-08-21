@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/detail_expanded"/>
+
+    <ConstraintSet
+        android:id="@+id/detail_collapsed"
+        app:deriveConstraintsFrom="@+id/detail_expanded">
+
+        <Constraint
+            android:id="@id/detailsImgIV"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@id/detailsPetNameTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_constraintTop_toBottomOf="@id/detailsImgIV"
+            app:layout_constraintStart_toEndOf="@id/detailsCloseIV"
+            app:layout_constraintEnd_toStartOf="@id/detailsBookmarkIV"
+            />
+
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/detail_collapsed"
+        app:constraintSetStart="@id/detail_expanded">
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:touchAnchorId="@id/detailsRV" />
+    </Transition>
+</MotionScene>

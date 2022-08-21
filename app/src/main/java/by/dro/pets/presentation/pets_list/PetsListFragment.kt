@@ -1,6 +1,5 @@
 package by.dro.pets.presentation.pets_list
 
-
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.ImageView
@@ -22,12 +21,14 @@ import com.mancj.materialsearchbar.MaterialSearchBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-open class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPetsListBinding::inflate),
+open class PetsListFragment :
+    BaseFragment<FragmentPetsListBinding>(FragmentPetsListBinding::inflate),
     MaterialSearchBar.OnSearchActionListener {
 
     protected open val viewModel: PetsListViewModel by viewModels()
 
-    protected open val detailFragmentNavigation: Int = R.id.action_petsListFragment_to_detailFragment
+    protected open val detailFragmentNavigation: Int =
+        R.id.action_petsListFragment_to_detailFragment
 
     companion object {
         const val ARG_UID = "ARG_UID"
@@ -35,7 +36,12 @@ open class PetsListFragment : BaseFragment<FragmentPetsListBinding>(FragmentPets
 
     private val petsAdapter = PetsAdapter(object : PetsAdapter.PetClickListener {
 
-        override fun onPetClicked(pet: Dog, imageView: ImageView, textView: TextView, bookmark: ImageView) {
+        override fun onPetClicked(
+            pet: Dog,
+            imageView: ImageView,
+            textView: TextView,
+            bookmark: ImageView
+        ) {
 
             if (binding.searchBar.isSearchEnabled)
                 binding.searchBar.disableSearch()

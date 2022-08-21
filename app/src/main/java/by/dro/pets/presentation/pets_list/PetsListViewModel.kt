@@ -28,7 +28,6 @@ open class PetsListViewModel @Inject constructor(
             if (searchText.isEmpty()) dogs
             else dogs.filter { dog ->
                 dog.name.contains(searchText, ignoreCase = true)
-                        || dog.nameInternational.contains(searchText, ignoreCase = true)
             }
         }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 

@@ -6,6 +6,7 @@ import by.dro.pets.R
 import by.dro.pets.databinding.PetViewHolderBinding
 import by.dro.pets.domain.entities.Dog
 import by.dro.pets.presentation.pets_list.PetsAdapter.Companion.ARG_BOOKMARK
+import by.dro.pets.util.EMPTY
 import by.dro.pets.util.getContext
 import by.dro.pets.util.load
 
@@ -36,7 +37,7 @@ class PetViewHolder(
         this.pet = pet
 
         binding.petsViewHolderNameTV.text = pet.name
-        binding.petsViewHolderTypeTV.text = pet.country
+        binding.petsViewHolderTypeTV.text = String.EMPTY
         binding.petsViewHolderRatingTV.text = pet.popularityRating.toString()
         binding.petsViewHolderImageIV.load(pet.titleImg)
         bindBookmark(pet.isBookmarked)

@@ -1,525 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    android:orientation="vertical"
-    tools:context=".presentation.pets_details.PetsDetailFragment">
+    app:layoutDescription="@xml/fragment_detail_scene"
+    >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+    <!--    <com.google.android.material.appbar.AppBarLayout-->
+    <!--        android:id="@+id/appbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:minHeight="?attr/actionBarSize">-->
+
+    <!--    <androidx.appcompat.widget.Toolbar-->
+    <!--        android:id="@+id/toolbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:paddingEnd="@dimen/big_padding"-->
+    <!--        android:minHeight="?attr/actionBarSize"/>-->
+
+    <!--    </com.google.android.material.appbar.AppBarLayout>-->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize">
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/petsImage"
             android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/dog_placeholder"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/petsDetailBookmark"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="top|end"
+            android:adjustViewBounds="true"
+            android:paddingHorizontal="@dimen/big_padding"
+            tools:srcCompat="@drawable/ic_bookmark_enable"
+            />
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    </FrameLayout>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/petsImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/placeholder" />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="го текста  многоо текста  много текста  мна  много текста  "
+        />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/petsDetailBookmark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="top|end"
-                    android:paddingHorizontal="@dimen/big_padding"
-                    android:adjustViewBounds="true"
-                    tools:srcCompat="@drawable/ic_bookmark_enable"
-                    />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/petsName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:textColor="#CC000000"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="Корги"
+        />
 
-            </FrameLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/petsName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingTop="16dp"
-                android:textColor="#CC000000"
-                android:textSize="24sp"
-                tools:text="Корги" />
-
-            <TextView
-                android:id="@+id/nameEn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:textColor="#CC5C5C5C"
-                android:textSize="18sp"
-                tools:text="Корги" />
-
-            <TextView
-                android:id="@+id/popularityRatingTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/breed_characteristics"
-                android:textColor="@android:color/white" />
-
-
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:stretchColumns="*"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp">
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/tableRow">
-
-                    <TextView
-                        android:id="@+id/popularityRatingTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/popularityRating" />
-
-                    <RatingBar
-                        android:id="@+id/popularityRating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:numStars="10"
-                        android:rating="5"
-                        android:layout_gravity="right"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <TextView
-                        android:id="@+id/trainingRatingTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/trainingRating" />
-
-                    <RatingBar
-                        android:id="@+id/trainingRating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:numStars="10"
-                        android:rating="5"
-                        android:layout_gravity="right"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/tableRow">
-
-                    <TextView
-                        android:id="@+id/mindRatingTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/mindRating" />
-
-                    <RatingBar
-                        android:id="@+id/mindRating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:numStars="10"
-                        android:rating="5"
-                        android:layout_gravity="right"/>
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <TextView
-                        android:id="@+id/protectionRatingTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/protectionRating" />
-
-                    <RatingBar
-                        android:id="@+id/protectionRating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:numStars="10"
-                        android:rating="5"
-                        android:layout_gravity="right"/>
-                </TableRow>
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/tableRow">
-
-                    <TextView
-                        android:id="@+id/childrenRatingTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/childrenRating" />
-
-                    <RatingBar
-                        android:id="@+id/childrenRating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:numStars="10"
-                        android:rating="5"
-                        android:layout_gravity="right"/>
-                </TableRow>
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <TextView
-                        android:id="@+id/dexterityRatingTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dexterityRating" />
-
-                    <RatingBar
-                        android:id="@+id/dexterityRating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:numStars="10"
-                        android:rating="5"
-                        android:layout_gravity="right"/>
-                </TableRow>
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/tableRow">
-
-                    <TextView
-                        android:id="@+id/moltRatingTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/moltRating" />
-
-                    <RatingBar
-                        android:id="@+id/moltRating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:numStars="10"
-                        android:rating="5"
-                        android:layout_gravity="right"/>
-                </TableRow>
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
-
-                    <TextView
-                        android:id="@+id/sizeRatingTxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sizeRating" />
-
-                    <RatingBar
-                        android:id="@+id/sizeRating"
-                        style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:numStars="10"
-                        android:rating="5"
-                        android:layout_gravity="right"/>
-                </TableRow>
-            </TableLayout>
-
-            <TextView
-                android:id="@+id/descriptionTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:paddingLeft="16dp"
-                android:background="@color/titleBackground"
-                android:textColor="@android:color/white"
-                android:text="@string/description" />
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-
-
-            <TextView
-                android:id="@+id/standartNumberTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:paddingLeft="16dp"
-                android:background="@color/titleBackground"
-                android:textColor="@android:color/white"
-                android:text="@string/standartNumber" />
-
-            <TextView
-                android:id="@+id/standartNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/countryTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/country"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/country"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/usingTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/using"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/using"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/sizeTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/size"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/weightTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/weight"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/weight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/woolTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/wool"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/wool"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/colorTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/color"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/color"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/careTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/care"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/care"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/lifespanTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/lifespan"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/lifespan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-            <TextView
-                android:id="@+id/problemsTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/titleBackground"
-                android:paddingLeft="16dp"
-                android:text="@string/problems"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/problems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                tools:text="го текста  многоо текста  много текста  мна  много текста  " />
-
-
-            <TextView
-                android:id="@+id/characterTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
-                android:paddingLeft="16dp"
-                android:background="@color/titleBackground"
-                android:textColor="@android:color/white"
-                android:text="@string/character" />
-
-            <TextView
-                android:id="@+id/character"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:paddingBottom="24dp"
-                tools:text="много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  много текста  " />
-        </LinearLayout>
-    </ScrollView>
-
-
-
-</LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/detailsRV"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/detail_section_view_holder"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

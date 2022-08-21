@@ -11,26 +11,26 @@ import kotlinx.parcelize.Parcelize
 data class DogModel(
     var uid: String? = "",
     var name: String? = "",
-    var nameInternational: String? = "",
-    var titleImg: String? = "",
+    var title_img: String? = "",
     var description: String? = "",
-    var popularityRating: Int? = 0,
-    var trainingRating: Int? = 0,
-    var sizeRating: Int? = 0,
-    var mindRating: Int? = 0,
-    var protectionRating: Int? = 0,
-    var childrenRating: Int? = 0,
-    var dexterityRating: Int? = 0,
-    var moltRating: Int? = 0,
-    var standartNumber: String? = "",
-    var country: String? = "",
-    var using: String? = "",
-    var size: String? = "",
-    var weight: String? = "",
-    var wool: String? = "",
-    var color: String? = "",
-    var character: String? = "",
-    var care: String? = "",
-    var lifespan: String? = "",
-    var problems: String? = ""
+    var popularity_rating: Double? = 0.0,
+    var fci_number: Int? = 0,
+    var comments: String? = "",
+    var sections: List<SectionModel>? = emptyList(),
+) : Parcelable
+
+@IgnoreExtraProperties
+@Parcelize
+@Keep
+data class SectionModel(
+    var title: String? = "",
+    var items: List<SectionItemModel>? = emptyList(),
+) : Parcelable
+
+@IgnoreExtraProperties
+@Parcelize
+@Keep
+data class SectionItemModel(
+    var title: String? = "",
+    var body: String? = "",
 ) : Parcelable
