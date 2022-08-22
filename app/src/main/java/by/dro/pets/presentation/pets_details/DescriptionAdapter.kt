@@ -29,13 +29,14 @@ class DescriptionAdapter : RecyclerView.Adapter<DescriptionViewHolder>() {
 
     override fun getItemCount() = items.size
 
-    fun setDescription(data: DescriptionData?) {
-        if (data == null) {
-            items.clear()
-            notifyItemRemoved(ITEM_POSITION)
-        } else {
+    fun setDescription(data: DescriptionData) {
+        if (items.isEmpty()) {
             items.add(data)
             notifyItemInserted(ITEM_POSITION)
+        } else {
+            items.clear()
+            items.add(data)
+            notifyItemChanged(ITEM_POSITION)
         }
     }
 }
