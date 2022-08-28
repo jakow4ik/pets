@@ -58,6 +58,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Repository: ${{ github.repository }}
-            Build version: ${{github.run_number}}
+            Build version: ${{env.BUILD_NUMBER}}
 
             ${{ env.INTERNAL_SHARING_DOWNLOAD_URL }}

@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -22,13 +23,16 @@ open class PetsListViewModel @Inject constructor(
     private val removeDogBookmark: RemoveDogBookmarkUseCase,
 ) : ViewModel() {
 
+    private val _state = MutableStateFlow(State.LOAD)
     private val _search = MutableStateFlow(String.EMPTY)
+
+    val state = _state.asStateFlow()
     val dogsList = getDogsUseCase.execute(Unit)
         .combine(_search) { dogs, searchText ->
-            if (searchText.isEmpty()) dogs
-            else dogs.filter { dog ->
+            dogs.filter { dog ->
                 dog.name.contains(searchText, ignoreCase = true)
-                        || dog.nameInternational.contains(searchText, ignoreCase = true)
+            }.also {
+                _state.emit(if (it.isEmpty()) State.SHOW_PLACEHOLDER else State.SHOW_PETS)
             }
         }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
@@ -44,5 +48,9 @@ open class PetsListViewModel @Inject constructor(
 
     fun onSearchTextChanged(text: CharSequence?) {
         _search.value = (text?.toString() ?: String.EMPTY).trim()
+    }
+
+    enum class State {
+        LOAD, SHOW_PETS, SHOW_PLACEHOLDER
     }
 }
