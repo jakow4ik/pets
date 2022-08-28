@@ -9,6 +9,7 @@
     <color name="primarily_cards_background">#FFFFFF</color>
     <color name="primarily_text">#3C4F49</color>
     <color name="primarily_light_text">#849791</color>
+    <color name="header_text">#444444</color>
     
     <color name="accent_yellow">#FFB930</color>
     <color name="accent_green">#4D9680</color>

@@ -10,11 +10,16 @@ import by.dro.pets.databinding.DetailSectionItemBinding
 import by.dro.pets.databinding.DetailSectionViewHolderBinding
 import by.dro.pets.domain.entities.SectionItem
 import by.dro.pets.util.getContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 
 class SectionAdapter :
     ListAdapter<PetsDetailViewModel.DescriptionSection, SectionViewHolder>(SectionDiff) {
 
+    private val _scrollToSection = MutableStateFlow(INIT_POSITION)
     private var expandedPosition: Int? = null
+
+    val scrollToSection = _scrollToSection.asSharedFlow()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder {
         val binding = DetailSectionViewHolderBinding.inflate(
@@ -32,7 +37,12 @@ class SectionAdapter :
             expandedPosition = if (expandedPosition == position) null else position
             lastExpandedPosition?.let { notifyItemChanged(it) }
             notifyItemChanged(position)
+            _scrollToSection.value = expandedPosition ?: INIT_POSITION
         }
+    }
+
+    companion object {
+        const val INIT_POSITION = -1
     }
 }
 

@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import by.dro.pets.R
-import by.dro.pets.databinding.FragmentDetailNewBinding
+import by.dro.pets.databinding.FragmentDetailBinding
 import by.dro.pets.domain.entities.Dog
 import by.dro.pets.presentation.base.BaseFragment
 import by.dro.pets.util.collectOnStart
 import by.dro.pets.util.load
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class PetsDetailFragment :
-    BaseFragment<FragmentDetailNewBinding>(FragmentDetailNewBinding::inflate) {
+    BaseFragment<FragmentDetailBinding>(FragmentDetailBinding::inflate) {
 
     private val viewModel: PetsDetailViewModel by viewModels()
 
@@ -41,6 +42,16 @@ class PetsDetailFragment :
         collectOnStart(viewModel.dog) { updateUi(it) }
         collectOnStart(viewModel.sections) { sectionAdapter.submitList(it) }
         collectOnStart(viewModel.detail) { descriptionAdapter.setDescription(it) }
+        collectOnStart(sectionAdapter.scrollToSection) { section ->
+            if (section == SectionAdapter.INIT_POSITION) {
+                binding.detailsRV.scrollToPosition(0)
+                binding.root.transitionToStart()
+            } else {
+                delay(200)
+                binding.detailsRV.scrollToPosition(section + descriptionAdapter.itemCount)
+                binding.root.transitionToEnd()
+            }
+        }
     }
 
     private fun getDividerItemDecoration(): RecyclerView.ItemDecoration {

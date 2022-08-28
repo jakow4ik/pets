@@ -29,7 +29,6 @@
         android:id="@+id/detailPopularityTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/medium_padding"
         android:fontFamily="@font/raleway"
         android:paddingHorizontal="@dimen/big_padding"
         android:textColor="@color/accent_green"
