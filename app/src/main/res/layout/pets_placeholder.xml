@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/raleway"
-        android:paddingHorizontal="@dimen/big_padding"
+        android:paddingHorizontal="@dimen/extra_huge_padding"
         android:textAlignment="center"
         android:textColor="@color/primarily_text"
         android:textSize="15sp"

@@ -70,7 +70,11 @@ open class PetsListFragment :
         initPlaceholder()
         collectOnStart(viewModel.dogsList) {
             petsAdapter.submitList(it)
-            updatePlaceholder(it.isEmpty())
+        }
+        collectOnStart(viewModel.state) { state ->
+            updatePlaceholder(state == PetsListViewModel.State.SHOW_PLACEHOLDER)
+            binding.recycler.isVisible = state == PetsListViewModel.State.SHOW_PETS
+            binding.petsListShimmer.root.isVisible = state == PetsListViewModel.State.LOAD
         }
         postponeEnterTransition()
     }
@@ -85,8 +89,8 @@ open class PetsListFragment :
     protected open fun initPlaceholder() {
         binding.petsPlaceholder.apply {
             petsListEmptyImage.setImageResource(R.drawable.img_pets_list_empty)
-            petsListEmptyTitle.setText(R.string.pets_list_placeholder_title)
-            petsListEmptyText.text = String.EMPTY
+            petsListEmptyTitle.text = String.EMPTY
+            petsListEmptyText.setText(R.string.pets_list_placeholder_text)
         }
     }
 
