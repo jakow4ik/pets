@@ -19,8 +19,13 @@
     <dimen name="view_holder_card_radius">10dp</dimen>
     <dimen name="view_holder_name_margin_top">8dp</dimen>
     <dimen name="view_holder_type_margin_top">8dp</dimen>
-    <dimen name="view_holder_rating_width">40dp</dimen>
+    <dimen name="view_holder_rating_width">45dp</dimen>
     <dimen name="view_holder_rating_drawable_padding">5dp</dimen>
     <integer name="view_holder_name_max_lines">2</integer>
+
+    <!--  Pet detail  -->
+    <dimen name="detail_section_title_text_size">20sp</dimen>
+    <dimen name="detail_section_item_title_text_size">16sp</dimen>
+    <dimen name="detail_section_item_body_text_size">16sp</dimen>
 
 </resources>

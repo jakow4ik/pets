@@ -45,4 +45,12 @@
         android:layout_gravity="center"
         />
 
+    <include
+        android:id="@+id/petsListShimmer"
+        layout="@layout/pets_list_shimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

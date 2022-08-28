@@ -3,57 +3,33 @@ package by.dro.pets.domain.entities
 data class Dog(
     val uid: String,
     val name: String,
-    val nameInternational: String,
     val titleImg: String,
     val description: String,
-    val popularityRating: Int,
-    val trainingRating: Int,
-    val sizeRating: Int,
-    val mindRating: Int,
-    val protectionRating: Int,
-    val childrenRating: Int,
-    val dexterityRating: Int,
-    val moltRating: Int,
-    val standartNumber: String,
-    val country: String,
-    val using: String,
-    val size: String,
-    val weight: String,
-    val wool: String,
-    val color: String,
-    val character: String,
-    val care: String,
-    val lifespan: String,
-    val problems: String,
+    val popularityRating: Double,
+    val fciNumber: Int,
+    val sections: List<Section>,
     val isBookmarked: Boolean,
 ) {
     companion object {
         val EMPTY = Dog(
             uid = "",
             name = "",
-            nameInternational = "",
             titleImg = "",
             description = "",
-            popularityRating = 0,
-            trainingRating = 0,
-            sizeRating = 0,
-            mindRating = 0,
-            protectionRating = 0,
-            childrenRating = 0,
-            dexterityRating = 0,
-            moltRating = 0,
-            standartNumber = "",
-            country = "",
-            using = "",
-            size = "",
-            weight = "",
-            wool = "",
-            color = "",
-            character = "",
-            care = "",
-            lifespan = "",
-            problems = "",
+            popularityRating = 0.0,
+            fciNumber = 0,
+            sections = emptyList(),
             isBookmarked = false,
         )
     }
 }
+
+data class Section(
+    val title: String,
+    val items: List<SectionItem>,
+)
+
+data class SectionItem(
+    val title: String,
+    val body: String,
+)

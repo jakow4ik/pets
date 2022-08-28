@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/sectionItemTitleTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/medium_padding"
+        android:paddingTop="@dimen/big_padding"
+        android:fontFamily="@font/raleway"
+        android:paddingHorizontal="@dimen/big_padding"
+        android:textColor="@color/primarily_light_text"
+        android:textSize="@dimen/detail_section_item_title_text_size"
+        tools:text="Item title"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/sectionItemBodyTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/raleway"
+        android:paddingHorizontal="@dimen/big_padding"
+        android:textColor="@color/primarily_text"
+        android:textSize="@dimen/detail_section_item_body_text_size"
+        tools:text="@string/bookmarks_placeholder_text"
+        />
+
+</LinearLayout>
